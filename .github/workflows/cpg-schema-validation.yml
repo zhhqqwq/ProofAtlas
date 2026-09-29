@@ -1,0 +1,49 @@
+name: CPG Schema Validation
+
+on:
+  push:
+    paths:
+      - "schema/cognitive-proof-graph/**"
+      - "examples/cognitive-proof-graph/**"
+      - "evals/cognitive-proof-graph/**"
+      - ".github/workflows/cpg-schema-validation.yml"
+  pull_request:
+    paths:
+      - "schema/cognitive-proof-graph/**"
+      - "examples/cognitive-proof-graph/**"
+      - "evals/cognitive-proof-graph/**"
+      - ".github/workflows/cpg-schema-validation.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install validator dependencies
+        run: python -m pip install --disable-pip-version-check pyyaml jsonschema
+
+      - name: Validate complete proof examples
+        run: |
+          set -euo pipefail
+          for graph in examples/cognitive-proof-graph/*.yaml; do
+            echo "Validating positive example: $graph"
+            python schema/cognitive-proof-graph/v1/validate_cpg.py               "$graph"               schema/cognitive-proof-graph/v1/cognitive-proof-graph-v1.schema.json               schema/cognitive-proof-graph/v1/relation-signatures.json
+          done
+
+      - name: Require invalid fixtures to fail
+        run: |
+          set -euo pipefail
+          for graph in evals/cognitive-proof-graph/invalid/*.yaml; do
+            echo "Validating negative fixture: $graph"
+            if python schema/cognitive-proof-graph/v1/validate_cpg.py               "$graph"               schema/cognitive-proof-graph/v1/cognitive-proof-graph-v1.schema.json               schema/cognitive-proof-graph/v1/relation-signatures.json; then
+              echo "ERROR: invalid fixture unexpectedly passed: $graph"
+              exit 1
+            else
+              echo "Rejected as expected: $graph"
+            fi
+          done
