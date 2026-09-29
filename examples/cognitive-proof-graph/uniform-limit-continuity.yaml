@@ -1,0 +1,290 @@
+schema_version: 1.0-rc1
+graph:
+  id: G_uniform_limit_continuity
+  title: Uniform limit of continuous functions is continuous
+  status: validated
+  root_scope: S_proof
+  source: null
+  description: null
+  metadata: {}
+entities:
+- id: C_goal
+  kind: Claim
+  home_scope: S_route
+  canonical_label: f is continuous
+  aliases: []
+  metadata: {}
+  proposition_text: f is continuous
+  references: [E_f]
+  claim_status: goal
+- id: E_f
+  kind: MathematicalEntity
+  home_scope: S_proof
+  canonical_label: f
+  aliases: []
+  metadata: {}
+  math_kind_hint: function
+  origin_mode: inherited
+- id: E_fN
+  kind: MathematicalEntity
+  home_scope: S_route
+  canonical_label: f_N
+  aliases: []
+  metadata: {}
+  math_kind_hint: function
+  origin_mode: chosen
+- id: F_approx
+  kind: SearchSpace
+  home_scope: S_route
+  canonical_label: continuous approximants
+  aliases: []
+  metadata: {}
+  process_status: active
+  process_profile: {search_space_kind: candidate_family}
+- id: U_bridge
+  kind: Unit
+  home_scope: S_route
+  canonical_label: choose a continuous approximant
+  aliases: []
+  metadata: {}
+  process_status: completed
+  process_profile: {degree_of_freedom: approximant}
+- id: U_budget
+  kind: Unit
+  home_scope: S_route
+  canonical_label: allocate the epsilon budget
+  aliases: []
+  metadata: {}
+  process_status: completed
+  process_profile: {}
+- id: U_delta
+  kind: Unit
+  home_scope: S_route
+  canonical_label: choose delta from continuity of f_N
+  aliases: []
+  metadata: {}
+  process_status: completed
+  process_profile: {}
+- id: C_fN_cont
+  kind: Claim
+  home_scope: S_route
+  canonical_label: f_N is continuous
+  aliases: []
+  metadata: {}
+  proposition_text: f_N is continuous
+  references: [E_fN]
+  claim_status: given
+- id: C_close
+  kind: Claim
+  home_scope: S_route
+  canonical_label: f_N is uniformly close to f
+  aliases: []
+  metadata: {}
+  proposition_text: sup_x |f_N(x)-f(x)| < epsilon/3
+  references: [E_fN, E_f]
+  claim_status: proved
+- id: C_mid
+  kind: Claim
+  home_scope: S_route
+  canonical_label: middle error is < epsilon/3
+  aliases: []
+  metadata: {}
+  proposition_text: '|f_N(x)-f_N(x0)| < epsilon/3'
+  references: [E_fN]
+  claim_status: proved
+- id: C_final
+  kind: Claim
+  home_scope: S_route
+  canonical_label: total error < epsilon
+  aliases: []
+  metadata: {}
+  proposition_text: '|f(x)-f(x0)| < epsilon'
+  references: [E_f]
+  claim_status: proved
+- id: P_line
+  kind: PresentationSpan
+  home_scope: S_route
+  canonical_label: three-term epsilon estimate
+  aliases: []
+  metadata: {}
+  presentation_profile:
+    text: '|f-f_N|+|f_N-f_N|+|f_N-f| < epsilon'
+    document_id: uniform-limit-proof
+scopes:
+- id: S_proof
+  kind: proof
+  parent_scope: null
+  status: active
+  active_assumptions: []
+  local_bindings: []
+  imports: []
+  exports: []
+  metadata: {}
+- id: S_route
+  kind: route
+  parent_scope: S_proof
+  status: active
+  active_assumptions: []
+  local_bindings: [C_goal, E_fN, F_approx, U_bridge, U_budget, U_delta, C_fN_cont, C_close, C_mid, C_final]
+  imports: []
+  exports: []
+  metadata: {}
+relations:
+- id: R_goal
+  semantic_mode: assertion
+  layer: search
+  relation_type: goal_of
+  participants:
+  - {role: goal, ref: C_goal}
+  - {role: process, ref: U_bridge}
+  scope: S_route
+  evidence: {kind: structural_reconstruction, detail: null}
+  confidence: strong
+  fidelity: null
+  metadata: {}
+- id: R_member
+  semantic_mode: assertion
+  layer: search
+  relation_type: candidate_in
+  participants:
+  - {role: candidate, ref: E_fN}
+  - {role: search_space, ref: F_approx}
+  scope: S_route
+  evidence: {kind: structural_reconstruction, detail: null}
+  confidence: strong
+  fidelity: null
+  metadata: {}
+- id: R_select
+  semantic_mode: event
+  layer: search
+  relation_type: select
+  participants:
+  - {role: selector, ref: U_bridge}
+  - {role: search_space, ref: F_approx}
+  - {role: selected, ref: E_fN}
+  scope: S_route
+  evidence: {kind: m3_forward_reconstruction, detail: null}
+  confidence: strong
+  fidelity: M3-provisional
+  metadata: {}
+  event:
+    preconditions: []
+    outputs: [E_fN]
+    causal_parents: []
+    outcome: accepted
+    state_delta: {}
+- id: R_close_est
+  semantic_mode: event
+  layer: logical
+  relation_type: establish_claim
+  participants:
+  - {role: actor, ref: U_bridge}
+  - {role: evidence, ref: C_fN_cont}
+  - {role: conclusion, ref: C_close}
+  scope: S_route
+  evidence: {kind: mathematical_derivation, detail: null}
+  confidence: certain
+  fidelity: null
+  metadata: {}
+  event:
+    preconditions: [C_fN_cont]
+    outputs: [C_close]
+    causal_parents: [R_select]
+    outcome: proved
+    state_delta: {}
+- id: R_mid_est
+  semantic_mode: event
+  layer: logical
+  relation_type: establish_claim
+  participants:
+  - {role: actor, ref: U_delta}
+  - {role: evidence, ref: C_fN_cont}
+  - {role: conclusion, ref: C_mid}
+  scope: S_route
+  evidence: {kind: mathematical_derivation, detail: null}
+  confidence: certain
+  fidelity: null
+  metadata: {}
+  event:
+    preconditions: [C_fN_cont]
+    outputs: [C_mid]
+    causal_parents: [R_select]
+    outcome: proved
+    state_delta: {}
+- id: R_final
+  semantic_mode: event
+  layer: logical
+  relation_type: establish_claim
+  participants:
+  - {role: actor, ref: U_delta}
+  - {role: evidence, ref: C_close}
+  - {role: evidence, ref: C_mid}
+  - {role: conclusion, ref: C_final}
+  scope: S_route
+  evidence: {kind: mathematical_derivation, detail: null}
+  confidence: certain
+  fidelity: null
+  metadata: {}
+  event:
+    preconditions: [C_close, C_mid]
+    outputs: [C_final]
+    causal_parents: [R_close_est, R_mid_est]
+    outcome: proved
+    state_delta: {}
+- id: R_compress
+  semantic_mode: assertion
+  layer: cross_layer
+  relation_type: compressed_into
+  participants:
+  - {role: source, ref: R_select}
+  - {role: source, ref: U_budget}
+  - {role: source, ref: R_close_est}
+  - {role: source, ref: R_mid_est}
+  - {role: source, ref: R_final}
+  - {role: target, ref: P_line}
+  scope: S_route
+  evidence: {kind: explicit_text, detail: null}
+  confidence: strong
+  fidelity: null
+  metadata: {}
+  loss_profile: [motivation_loss, alternative_loss, constraint_provenance_loss]
+mentions:
+- id: M_fN
+  entity_id: E_fN
+  scope: S_route
+  view: presentation
+  source_span: P_line
+  surface_form: f_N
+  role_in_span: bridge function
+  metadata: {}
+- id: M_f
+  entity_id: E_f
+  scope: S_route
+  view: presentation
+  source_span: P_line
+  surface_form: f
+  role_in_span: target function
+  metadata: {}
+relation_signatures:
+  catalog_version: 1.0-rc1
+  catalog_path: ../../schema/relation-signatures.json
+presentation_sequences:
+- id: SEQ_uniform
+  document_id: uniform-limit-proof
+  ordered_spans: [P_line]
+validation_invariants:
+- GI-1 Stable Identity
+- GI-2 No Equality Merge
+- GI-3 Entity/Mention Separation
+- GI-4 Scope Reasoning Visibility
+- GI-5 Explicit Export
+- GI-6 Layer Typing
+- GI-7 Explicit Cross-Layer Mapping
+- GI-8 Causal Partial Order
+- GI-9 Presentation Order Independence
+- GI-10 N-ary Preservation
+- SOI-1 Claim/Object Separation
+- SOI-2 Contextual Roles Do Not Duplicate Entities
+- RV-1 Relation Signature Validity
+- RV-2 Endpoint Type/Cardinality
+- RV-3 Event Causal DAG
