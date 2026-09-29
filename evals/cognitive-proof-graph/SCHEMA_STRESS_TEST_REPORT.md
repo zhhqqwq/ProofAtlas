@@ -14,8 +14,8 @@ The original three complete serializations were:
 
 The stress pass added the remaining six Construction Archaeology proofs:
 
-4. continuity of (x^2);
-5. continuity of (1/x);
+4. continuity of x^2;
+5. continuity of 1/x;
 6. differentiability implies continuity;
 7. limsup approximating subsequence;
 8. interval self-map fixed point via IVT;
@@ -39,21 +39,13 @@ The stress pass added the remaining six Construction Archaeology proofs:
 
 Limit uniqueness requires two independently generated thresholds:
 
-[
-N_1parallel N_2
-]
+`N_1 || N_2`
 
 before:
 
-[
-N=max{N_1,N_2}.
-]
+`N = max{N_1, N_2}`.
 
-Because absence of a causal edge does not prove independence, the relation catalog now contains:
-
-`causally_independent_of`
-
-as a symmetric search assertion over two Event Relations.
+Because absence of a causal edge does not prove independence, the relation catalog now contains `causally_independent_of` as a symmetric search assertion over two Event Relations.
 
 ### S2 — ConstructionPolicy contract
 
@@ -85,7 +77,7 @@ The validator now checks:
 
 Constant Archaeology was previously representable only through arbitrary metadata.
 
-Relations/events can now carry a typed `provenance` record:
+Relations/events can now carry a typed `provenance` record with:
 
 - `kind`;
 - `parents`;
@@ -98,30 +90,25 @@ Relations/events can now carry a typed `provenance` record:
 
 For `kind: constant`, `origin_mode` is required.
 
-This preserves:
+This preserves the distinction:
 
-[
-	ext{value identity}
-eq	ext{value-choice provenance}.
-]
+`value identity != value-choice provenance`.
 
 ## Complete-proof results
 
 | Proof | Main pressure | Result |
 |---|---|---|
-| (x^2) continuity | hidden radius, constant provenance, `min`, presentation-before-verification | VALID |
-| (1/x) continuity | parameter family, repeated `1/2`, denominator constraints | VALID |
-| differentiable ⇒ continuous | minimal Unit / anti-over-analysis | VALID |
+| x^2 continuity | hidden radius, constant provenance, `min`, presentation-before-verification | VALID |
+| 1/x continuity | parameter family, repeated `1/2`, denominator constraints | VALID |
+| differentiable => continuous | minimal Unit / anti-over-analysis | VALID |
 | limsup subsequence | recursive policy, child Episode, call/return/export | VALID |
 | interval fixed point | residual construction, theorem preparation, IVT compression | VALID |
-| limit uniqueness | independent thresholds, `max` merge, (arepsilon/2) budget | VALID |
+| limit uniqueness | independent thresholds, `max` merge, epsilon/2 budget | VALID |
 | uniform limit continuity | bridge, error budget, entity reuse | VALID |
 | Heine–Cantor | contradiction scope, existential witness, export | VALID |
 | positive compact lower bound | alternative Routes and isolation | VALID |
 
-[
-oxed{9/9	ext{ complete proof graphs VALID}}
-]
+**Result: 9/9 complete proof graphs VALID.**
 
 ## Negative tests
 
@@ -134,9 +121,7 @@ The final protocol rejects:
 5. child return to an unrelated sibling process;
 6. malformed constant provenance.
 
-[
-oxed{6/6	ext{ invalid fixtures REJECTED}}
-]
+**Result: 6/6 invalid fixtures REJECTED.**
 
 ## Presentation reorder
 
@@ -150,42 +135,23 @@ The graph already stores independently:
 
 A reorder is therefore derivable rather than redundantly stored.
 
-The (x^2) example can announce the polished (delta) before displaying its verification while the discovery reconstruction still requires localization and constraint synthesis before the merge that creates that polished expression.
+The x^2 example can announce the polished delta before displaying its verification while the discovery reconstruction still requires localization and constraint synthesis before the merge that creates that polished expression.
 
-Thus:
+So the invariant remains:
 
-[
-oxed{	ext{Presentation Order}
-eq	ext{Search Causality}}
-]
-
-remains a structural invariant rather than an extra ontology object.
+`Presentation Order != Search Causality`.
 
 ## Theorem-preparation compression
 
 The fixed-point serialization preserves:
 
-[
-	ext{fixed-point target}
-	o
-g=f-mathrm{id}
-	o
-	ext{continuity/sign preparation}
-	o
-	ext{IVT application}
-	o
-	ext{fixed point},
-]
+`fixed-point target -> g=f-id -> continuity/sign preparation -> IVT application -> fixed point`
 
 while one polished span may compress the preparation and application.
 
 So the graph keeps distinct:
 
-[
-oxed{	ext{Theorem}
-eq	ext{Theorem Application}
-eq	ext{Theorem Preparation}}.
-]
+`Theorem != Theorem Application != Theorem Preparation`.
 
 ## Freeze decision
 
@@ -200,17 +166,13 @@ The stress pass required no new:
 
 All failures were fixed by tightening signatures and validation contracts inside the existing architecture.
 
-Therefore:
-
-[
-oxed{	ext{CPG schema 1.0-rc1 is approved as ProofAtlas's first stable internal data protocol.}}
-]
+Therefore **CPG schema 1.0-rc1 is approved as ProofAtlas's first stable internal data protocol**.
 
 “Stable internal” means Part I/II/III implementations may rely on the core identity, scope, object-family, relation/event, participant, and causal semantics.
 
 Breaking changes to those semantics require a schema version change.
 
-This does **not** freeze:
+This does not freeze:
 
 - formula AST;
 - database technology;
