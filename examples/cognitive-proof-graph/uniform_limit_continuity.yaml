@@ -337,7 +337,7 @@ mentions:
   metadata: {}
 relation_signatures:
   catalog_version: 1.0-rc1
-  catalog_path: ../../schema/relation-signatures.json
+  catalog_path: ../../schema/cognitive-proof-graph/v1/relation-signatures.json
 presentation_sequences:
 - id: SEQ_uniform
   document_id: uniform-limit-proof
