@@ -1,0 +1,87 @@
+schema_version: 1.0-rc1
+graph:
+  id: G_invalid_scope_leak
+  title: Invalid scope-leak fixture
+  status: invalid
+  root_scope: S_proof
+  source: null
+  description: Parent proof illegally reasons over a child-local Claim without export/import.
+  metadata: {}
+entities:
+- id: C_local
+  kind: Claim
+  home_scope: S_child
+  canonical_label: child-local contradiction
+  aliases: []
+  proposition_text: local contradiction
+  references: []
+  claim_status: proved
+  metadata: {}
+- id: C_parent
+  kind: Claim
+  home_scope: S_proof
+  canonical_label: parent conclusion
+  aliases: []
+  proposition_text: P
+  references: []
+  claim_status: proved
+  metadata: {}
+- id: U_parent
+  kind: Unit
+  home_scope: S_proof
+  canonical_label: parent proof unit
+  aliases: []
+  process_status: completed
+  process_profile: {}
+  metadata: {}
+scopes:
+- id: S_proof
+  kind: proof
+  parent_scope: null
+  status: active
+  active_assumptions: []
+  local_bindings: [C_parent, U_parent]
+  imports: []
+  exports: []
+  metadata: {}
+- id: S_child
+  kind: subproof
+  parent_scope: S_proof
+  status: closed
+  active_assumptions: []
+  local_bindings: [C_local]
+  imports: []
+  exports: []
+  metadata: {}
+relations:
+- id: R_illegal
+  semantic_mode: event
+  layer: logical
+  relation_type: establish_claim
+  participants:
+  - role: actor
+    ref: U_parent
+  - role: evidence
+    ref: C_local
+  - role: conclusion
+    ref: C_parent
+  scope: S_proof
+  evidence:
+    kind: mathematical_derivation
+    detail: null
+  confidence: certain
+  fidelity: null
+  metadata: {}
+  event:
+    preconditions: [C_local]
+    outputs: [C_parent]
+    causal_parents: []
+    outcome: proved
+    state_delta: {}
+mentions: []
+relation_signatures:
+  catalog_version: 1.0-rc1
+  catalog_path: ../../../schema/cognitive-proof-graph/v1/relation-signatures.json
+presentation_sequences: []
+validation_invariants:
+- GI-4 Scope Reasoning Visibility
