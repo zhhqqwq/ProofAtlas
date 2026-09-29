@@ -2,24 +2,23 @@
 
 This directory turns CPG v0.1–v0.3 semantics into a machine-verifiable candidate format.
 
-## Files
+## Core files
 
 - `cognitive-proof-graph-v1.schema.json` — JSON Schema 2020-12 structural schema.
-- `relation-signatures.json` — semantic relation/event signature catalog.
-- `validate_cpg.py` — cross-reference, type, scope, cardinality, and causal-DAG validator.
-- `VALIDATION_INVARIANTS.md` — graph-wide semantic invariants.
-- `VALIDATION_REPORT.md` — current positive/negative validation results.
-
-Complete valid serializations live in `examples/cognitive-proof-graph/`.
-Deliberately invalid fixtures live in `evals/cognitive-proof-graph/invalid/`.
+- `relation-signatures.json` — relation/event semantic signature catalog.
+- `../tools/validate_cpg.py` — cross-reference, endpoint type, scope, cardinality, export and causal-DAG validator.
+- `../examples/cpg/*.yaml` — complete proof serializations.
+- `../evals/cpg-schema/` — validation report and negative fixtures.
 
 ## Validation
 
 ```bash
-python schema/cognitive-proof-graph/v1/validate_cpg.py \
-  examples/cognitive-proof-graph/uniform_limit_continuity.yaml \
-  schema/cognitive-proof-graph/v1/cognitive-proof-graph-v1.schema.json \
-  schema/cognitive-proof-graph/v1/relation-signatures.json
+python tools/validate_cpg.py \
+  examples/cpg/uniform_limit_continuity.yaml \
+  schema/cognitive-proof-graph-v1.schema.json \
+  schema/relation-signatures.json
 ```
 
-JSON Schema alone is intentionally not treated as sufficient for graph-wide invariants. The semantic validator checks relation signatures, global references, scope visibility, endpoint type/cardinality, and the event causal DAG.
+JSON Schema alone is intentionally not treated as sufficient for graph-wide invariants. The semantic validator checks relation signatures, global references, reasoning visibility, explicit export/import consistency, n-ary participant cardinalities, and event causal-DAG acyclicity.
+
+Status: **v1 candidate / rc1**, not stable v1.0.
