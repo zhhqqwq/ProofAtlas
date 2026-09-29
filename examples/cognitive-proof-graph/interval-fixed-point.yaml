@@ -1,0 +1,122 @@
+schema_version: 1.0-rc1
+graph: {id: G_interval_fixed_point, title: Continuous self-map of [0,1] has a fixed point, status: validated, root_scope: S_proof}
+entities:
+- {id: E_f, kind: MathematicalEntity, home_scope: S_proof, canonical_label: f, math_kind_hint: function, origin_mode: inherited}
+- {id: E_g, kind: MathematicalEntity, home_scope: S_route, canonical_label: g=f-id, math_kind_hint: function, origin_mode: derived}
+- {id: E_c, kind: MathematicalEntity, home_scope: S_route, canonical_label: c, math_kind_hint: point, origin_mode: theorem_supplied}
+- {id: U_residual, kind: Unit, home_scope: S_route, canonical_label: turn fixed point into zero finding}
+- {id: C_goal, kind: Claim, home_scope: S_route, canonical_label: fixed point exists, proposition_text: "exists c in [0,1] such that f(c)=c", references: [E_f,E_c], claim_status: goal}
+- {id: C_f_cont, kind: Claim, home_scope: S_proof, canonical_label: f continuous, proposition_text: "f is continuous on [0,1]", references: [E_f], claim_status: given}
+- {id: C_selfmap, kind: Claim, home_scope: S_proof, canonical_label: f maps interval to itself, proposition_text: "0<=f(x)<=1 on [0,1]", references: [E_f], claim_status: given}
+- {id: C_def, kind: Claim, home_scope: S_route, canonical_label: residual definition, proposition_text: "g(x)=f(x)-x", references: [E_g,E_f], claim_status: proved}
+- {id: C_g_cont, kind: Claim, home_scope: S_route, canonical_label: g continuous, proposition_text: "g is continuous on [0,1]", references: [E_g], claim_status: proved}
+- {id: C_sign0, kind: Claim, home_scope: S_route, canonical_label: left endpoint sign, proposition_text: "g(0)>=0", references: [E_g,E_f], claim_status: proved}
+- {id: C_sign1, kind: Claim, home_scope: S_route, canonical_label: right endpoint sign, proposition_text: "g(1)<=0", references: [E_g,E_f], claim_status: proved}
+- {id: C_zero, kind: Claim, home_scope: S_route, canonical_label: zero exists, proposition_text: "exists c in [0,1] with g(c)=0", references: [E_g,E_c], claim_status: proved}
+- id: T_IVT
+  kind: Theorem
+  home_scope: S_proof
+  canonical_label: Intermediate Value Theorem
+  knowledge_profile: {name: Intermediate Value Theorem}
+- id: P_define
+  kind: PresentationSpan
+  home_scope: S_route
+  canonical_label: define residual
+  presentation_profile: {text: "Let g(x)=f(x)-x.", document_id: fixed-point-proof}
+- id: P_ivt
+  kind: PresentationSpan
+  home_scope: S_route
+  canonical_label: compressed IVT application
+  presentation_profile: {text: "Since g is continuous, g(0)>=0 and g(1)<=0; by IVT there is c with g(c)=0.", document_id: fixed-point-proof}
+scopes:
+- {id: S_proof, kind: proof, status: active}
+- {id: S_route, kind: route, parent_scope: S_proof, status: active, local_bindings: [E_g,E_c,U_residual,C_goal,C_def,C_g_cont,C_sign0,C_sign1,C_zero]}
+relations:
+- id: R_goal
+  semantic_mode: assertion
+  layer: search
+  relation_type: goal_of
+  participants: [{role: goal, ref: C_goal},{role: process, ref: U_residual}]
+  scope: S_route
+  evidence: {kind: structural_reconstruction}
+  confidence: strong
+- id: R_make_g
+  semantic_mode: event
+  layer: search
+  relation_type: produce
+  participants: [{role: producer, ref: U_residual},{role: output, ref: E_g},{role: output, ref: C_def}]
+  scope: S_route
+  evidence: {kind: m3_forward_reconstruction}
+  confidence: strong
+  fidelity: M3-provisional
+  event: {outputs: [E_g,C_def], causal_parents: [], outcome: residual_constructed}
+- id: R_cont
+  semantic_mode: event
+  layer: logical
+  relation_type: establish_claim
+  participants: [{role: actor, ref: U_residual},{role: evidence, ref: C_f_cont},{role: evidence, ref: C_def},{role: conclusion, ref: C_g_cont}]
+  scope: S_route
+  evidence: {kind: mathematical_derivation}
+  confidence: certain
+  event: {preconditions: [C_f_cont,C_def], outputs: [C_g_cont], causal_parents: [R_make_g], outcome: proved}
+- id: R_sign0
+  semantic_mode: event
+  layer: logical
+  relation_type: establish_claim
+  participants: [{role: actor, ref: U_residual},{role: evidence, ref: C_selfmap},{role: evidence, ref: C_def},{role: conclusion, ref: C_sign0}]
+  scope: S_route
+  evidence: {kind: mathematical_derivation}
+  confidence: certain
+  event: {preconditions: [C_selfmap,C_def], outputs: [C_sign0], causal_parents: [R_make_g], outcome: proved}
+- id: R_sign1
+  semantic_mode: event
+  layer: logical
+  relation_type: establish_claim
+  participants: [{role: actor, ref: U_residual},{role: evidence, ref: C_selfmap},{role: evidence, ref: C_def},{role: conclusion, ref: C_sign1}]
+  scope: S_route
+  evidence: {kind: mathematical_derivation}
+  confidence: certain
+  event: {preconditions: [C_selfmap,C_def], outputs: [C_sign1], causal_parents: [R_make_g], outcome: proved}
+- id: R_ivt
+  semantic_mode: event
+  layer: logical
+  relation_type: apply_theorem
+  participants: [{role: theorem, ref: T_IVT},{role: premise, ref: C_g_cont},{role: premise, ref: C_sign0},{role: premise, ref: C_sign1},{role: conclusion, ref: C_zero}]
+  scope: S_route
+  evidence: {kind: theorem_instance}
+  confidence: certain
+  event: {preconditions: [C_g_cont,C_sign0,C_sign1], outputs: [C_zero], causal_parents: [R_cont,R_sign0,R_sign1], outcome: proved}
+- id: R_final
+  semantic_mode: event
+  layer: logical
+  relation_type: establish_claim
+  participants: [{role: actor, ref: U_residual},{role: evidence, ref: C_zero},{role: evidence, ref: C_def},{role: conclusion, ref: C_goal}]
+  scope: S_route
+  evidence: {kind: mathematical_derivation}
+  confidence: certain
+  event: {preconditions: [C_zero,C_def], outputs: [C_goal], causal_parents: [R_ivt], outcome: proved}
+- id: R_def_map
+  semantic_mode: assertion
+  layer: cross_layer
+  relation_type: presented_as
+  participants: [{role: source, ref: R_make_g},{role: target, ref: P_define}]
+  scope: S_route
+  evidence: {kind: explicit_text}
+  confidence: certain
+- id: R_theorem_compress
+  semantic_mode: assertion
+  layer: cross_layer
+  relation_type: compressed_into
+  participants: [{role: source, ref: R_cont},{role: source, ref: R_sign0},{role: source, ref: R_sign1},{role: source, ref: R_ivt},{role: source, ref: R_final},{role: target, ref: P_ivt}]
+  scope: S_route
+  evidence: {kind: explicit_text}
+  confidence: strong
+  loss_profile: [theorem_role_loss,dependency_loss,learner_explanation_loss]
+mentions:
+- {id: M_g_def, entity_id: E_g, scope: S_route, view: presentation, source_span: P_define, surface_form: g, role_in_span: residual}
+- {id: M_g_ivt, entity_id: E_g, scope: S_route, view: presentation, source_span: P_ivt, surface_form: g, role_in_span: IVT input}
+- {id: M_c, entity_id: E_c, scope: S_route, view: presentation, source_span: P_ivt, surface_form: c, role_in_span: theorem witness}
+relation_signatures: {catalog_version: 1.0-rc1}
+presentation_sequences:
+- {id: SEQ_fixed, document_id: fixed-point-proof, ordered_spans: [P_define,P_ivt]}
+validation_invariants: [stress-tested]
