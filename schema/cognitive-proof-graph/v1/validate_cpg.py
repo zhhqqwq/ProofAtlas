@@ -155,6 +155,23 @@ def validate_graph(g, schema=None, signatures=None):
                 elif relations[cp]["semantic_mode"]!="event":
                     errors.append(f"CAUSAL_PARENT_MODE: {r['id']} parent {cp} not event")
 
+        # export consistency: event, source cache, target cache, and ancestry agree
+        if typ == "export":
+            exported = by_role.get("exported", [])
+            srcs = by_role.get("source_scope", [])
+            tgts = by_role.get("target_scope", [])
+            if len(srcs)==1 and len(tgts)==1 and srcs[0] in scopes and tgts[0] in scopes:
+                src, tgt = srcs[0], tgts[0]
+                if tgt not in scope_ancestors(scopes, src):
+                    errors.append(f"EXPORT_TARGET: {r['id']} target {tgt} must be an ancestor of {src}")
+                for ref in exported:
+                    if ref in entities and not reasoning_visible(entities[ref], src, scopes):
+                        errors.append(f"EXPORT_SOURCE_VISIBILITY: {r['id']} cannot export {ref} from {src}")
+                    if ref not in scopes[src].get("exports", []):
+                        errors.append(f"EXPORT_CACHE_SOURCE: {r['id']} {ref} missing from {src}.exports")
+                    if ref not in scopes[tgt].get("imports", []):
+                        errors.append(f"EXPORT_CACHE_TARGET: {r['id']} {ref} missing from {tgt}.imports")
+
     event_ids={rid for rid,r in relations.items() if r["semantic_mode"]=="event"}
     adj={rid:[] for rid in event_ids}
     for rid in event_ids:
