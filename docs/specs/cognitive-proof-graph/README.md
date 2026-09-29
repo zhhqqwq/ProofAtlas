@@ -28,3 +28,16 @@ See `schema/cognitive-proof-graph/v1/`. The candidate includes:
 - a cross-reference/scope/causal-DAG validator;
 - three valid full-proof serializations;
 - three intentionally invalid fixtures.
+
+
+## Internal protocol freeze
+
+After the Schema Stress Test / Integration Pass:
+
+- 9 complete proof graphs validate;
+- 6 invalid fixtures are rejected;
+- recursive policies, child Episode scope, min/max merge, constant provenance, causal independence, presentation reorder, and theorem-preparation compression are covered.
+
+`schema_version: 1.0-rc1` is therefore frozen as ProofAtlas's first stable **internal** CPG data protocol. Public status remains v1 candidate / rc1.
+
+See `INTERNAL_PROTOCOL_FREEZE_v1.0-rc1.md`.
