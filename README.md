@@ -10,11 +10,29 @@ ProofAtlas is not primarily a theorem prover, proof rewriter, or answer generato
 
 **Pre-alpha / open design.** No claim of state-of-the-art performance or measured learning gains is made at this stage.
 
-Three core layers now have implementation candidates:
+The project now has three frozen/rc1 protocol layers plus the first integrated product-level Skill candidate:
 
 - **Motivation Fidelity / M3 Search Protocol v1.0-rc1** — answer-independent reconstruction of why a construction could reasonably be tried.
 - **Construction Archaeology v1.0-rc1** — end-to-end reconstruction of Units, Episodes, Routes, constraints, constants, construction policies, and Search-to-Presentation compression.
-- **Cognitive Proof Graph schema 1.0-rc1** — a machine-verifiable scoped, layered, role-based relational representation; stress-tested on nine complete proofs and frozen as the first stable internal data protocol (public status remains v1 candidate / rc1).
+- **Cognitive Proof Graph schema 1.0-rc1** — a machine-verifiable scoped, layered, role-based relational representation; stress-tested on nine complete proofs and frozen as the first stable internal data protocol.
+- **Integrated ProofAtlas Skill v0.2** — an orchestrator that selectively combines Motivation Fidelity, Construction Archaeology, the CPG, and learner-facing progressive disclosure.
+
+Public project status remains pre-alpha. CPG public status remains v1 candidate / rc1 rather than stable public v1.0.
+
+## Integrated product pipeline
+
+The current product architecture is:
+
+```text
+Proof / learner question
+  → Proof map + hotspot detection
+  → Motivation Fidelity where discovery claims are needed
+  → Construction Archaeology where construction history is nontrivial
+  → Cognitive Proof Graph semantic handoff + validation
+  → Learner-facing projection
+```
+
+The pipeline is selective: simple verification does not trigger full archaeology, and raw CPG records are internal by default.
 
 ## Why ProofAtlas?
 
@@ -51,7 +69,7 @@ Polished Proof
 
 ### 3. Cognitive Proof Graph
 
-The CPG is not a line-by-line proof graph. Its current substrate separates:
+The CPG is not a line-by-line proof graph. Its substrate separates:
 
 - stable mathematical entities from Claims;
 - semantic entities from textual Mentions;
@@ -59,13 +77,34 @@ The CPG is not a line-by-line proof graph. Its current substrate separates:
 - logical dependency from search causality and presentation order;
 - assertion relations from state-changing events.
 
-The schema candidate lives at:
+The frozen internal protocol lives at:
 
 ```text
 schema/cognitive-proof-graph/v1/
 ```
 
-It is stress-tested with nine complete proof serializations spanning epsilon-delta constructions, recursive subsequences, alternative routes, theorem preparation, min/max merges, and presentation compression, plus six deliberately invalid fixtures.
+It is stress-tested with nine complete proof serializations plus six deliberately invalid fixtures.
+
+### 4. Integrated Skill v0.2
+
+The current `skills/proof-understanding/SKILL.md` is the first integrated orchestrator.
+
+It supports:
+
+- map
+- diagnose
+- expand
+- motivate
+- construct
+- trace-constant
+- theorem-role
+- rederive
+- compare
+- teach
+- verify
+- quiz
+
+It uses the lowest sufficient internal depth and keeps raw audit structure hidden unless explicitly requested.
 
 ## Repository layout
 
@@ -74,7 +113,8 @@ ProofAtlas/
 ├── docs/specs/
 │   ├── motivation-fidelity/
 │   ├── construction-archaeology/
-│   └── cognitive-proof-graph/
+│   ├── cognitive-proof-graph/
+│   └── integrated-skill/
 ├── schema/cognitive-proof-graph/v1/
 ├── examples/
 │   ├── analysis/
@@ -82,18 +122,28 @@ ProofAtlas/
 ├── evals/
 │   ├── m3-adversarial/
 │   ├── construction-archaeology/
-│   └── cognitive-proof-graph/
+│   ├── cognitive-proof-graph/
+│   └── integrated-skill/
 └── skills/proof-understanding/SKILL.md
 ```
 
-## Machine-verifiable CPG candidate
+## Machine-verifiable CPG
 
 The schema package uses two validation layers:
 
 1. **JSON Schema 2020-12** for local structure and types.
-2. **Semantic validator** for global IDs, relation signatures, endpoint types/cardinality, scope visibility, references, and causal-DAG invariants.
+2. **Semantic validator** for global IDs, relation signatures, endpoint types/cardinality, scope visibility, references, recursive-policy contracts, constant provenance, call/return nesting, and causal-DAG invariants.
 
 This separation is intentional: graph-wide semantic invariants are not forced into JSON Schema when doing so would make the schema brittle or misleading.
+
+## Current evaluation status
+
+- M3 has dedicated adversarial tests.
+- Construction Archaeology has nine end-to-end full-proof tests.
+- CPG schema: **9/9 complete proof graphs VALID** and **6/6 invalid fixtures REJECTED**.
+- Integrated Skill v0.2: **9/9 pipeline-contract cases PASS**.
+
+The next evaluation phase should move to a larger real proof corpus and actual learner-facing output evaluation.
 
 ## Evaluation philosophy
 
@@ -107,6 +157,7 @@ ProofAtlas should not be evaluated only by whether it reproduces a reference sol
 - Did failed attempts provide information gain?
 - Did the explanation help a learner recognize a reusable proof pattern?
 - Does the machine representation preserve scope, identity, causality, and presentation compression without inventing a unique discovery history?
+- Did the product use only as much internal archaeology as the learner actually needed?
 
 ## Scope for the first research cycle
 
@@ -129,7 +180,7 @@ See [ROADMAP.md](ROADMAP.md).
 
 ## Contributing
 
-The project is deliberately open-design. Contributions are especially welcome in adversarial proof examples, hindsight-leakage failures, full-proof graph serializations, schema review, proof-learning UX, and evaluation methodology.
+The project is deliberately open-design. Contributions are especially welcome in real proof-corpus failures, hindsight-leakage cases, learner-output failures, full-proof graph serializations, pattern-library proposals grounded in repeated evidence, and evaluation methodology.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
