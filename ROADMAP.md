@@ -21,7 +21,7 @@
 - [x] Define Search-to-Presentation mapping.
 - [x] Integrate v0.1–v0.6 into Construction Archaeology Protocol v1.0-rc1.
 - [x] Run nine end-to-end full-proof adversarial tests.
-- [ ] Run CA rc1 on a larger proof corpus before stable freeze.
+- [ ] Run CA rc1 on a larger proof corpus before stable public freeze.
 
 ## v0.3 — Cognitive Proof Graph
 
@@ -32,16 +32,19 @@
 - [x] Define assertion/event relation semantics and n-ary participant roles.
 - [x] Publish JSON Schema v1 candidate and relation-signature catalog.
 - [x] Implement semantic validator for references, scope, signatures, cardinality, and causal DAG.
-- [x] Serialize and validate three complete proofs.
-- [x] Add invalid fixtures for generic `depends_on`, scope leakage, and causal cycles.\n- [x] Add stress-test fixtures for incomplete policies, invalid returns, and malformed provenance.\n- [x] Freeze `schema_version: 1.0-rc1` as the first stable internal CPG data protocol.
-- [x] Expand schema validation to all nine Construction Archaeology proof cases.
+- [x] Serialize and validate all nine Construction Archaeology proof cases.
+- [x] Add invalid fixtures for generic `depends_on`, scope leakage, causal cycles, incomplete policies, invalid returns, and malformed provenance.
+- [x] Freeze `schema_version: 1.0-rc1` as the first stable internal CPG data protocol.
 - [ ] Add learner-aware annotations and proof-pattern objects only when evals justify them.
 
-## v0.4 — Proof-understanding skill
+## v0.4 — Integrated Proof-understanding Skill
 
-- [ ] Integrate Motivation Fidelity, Construction Archaeology rc1, and CPG schema.
-- [ ] Add progressive disclosure modes: map, diagnose, expand, motivate, construct, theorem-role, trace-constant, rederive, teach, quiz.
-- [ ] Add analysis-focused pattern library.
+- [x] Integrate Motivation Fidelity, Construction Archaeology rc1, and CPG schema into `skills/proof-understanding/SKILL.md`.
+- [x] Add progressive disclosure modes: map, diagnose, expand, motivate, construct, theorem-role, trace-constant, rederive, compare, teach, verify, quiz.
+- [x] Run nine protocol-contract pipeline adversarial cases.
+- [ ] Run Integrated Skill v0.2 on a larger real analysis corpus.
+- [ ] Evaluate actual learner-facing outputs for clarity, fidelity, transfer value, and over-analysis.
+- [ ] Add an analysis-focused pattern library only from repeated corpus evidence.
 
 ## v0.5 — Benchmark
 
@@ -50,8 +53,9 @@
 - [ ] Measure motivation fidelity and hindsight leakage.
 - [ ] Measure construction explanation and constant provenance.
 - [ ] Measure theorem-role recognition.
+- [ ] Measure progressive-disclosure quality and over-analysis.
 - [ ] Evaluate transfer to unseen but structurally related proofs.
 
 ## v1.0 — First stable public release
 
-A stable release should require evidence that the system improves proof comprehension without systematically fabricating discovery narratives, plus stable machine-readable representations tested across a broader proof corpus.
+A stable release should require evidence that the system improves proof comprehension without systematically fabricating discovery narratives, plus stable machine-readable representations and an integrated Skill tested across a broader proof corpus.
