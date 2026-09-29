@@ -2,15 +2,15 @@
 
 ## Positive complete-proof serializations
 
-- `heine_cantor.yaml` — **VALID**
-- `positive_compact_lower_bound.yaml` — **VALID**
-- `uniform_limit_continuity.yaml` — **VALID**
+- `heine-cantor.yaml` — **VALID**
+- `positive-compact-lower-bound.yaml` — **VALID**
+- `uniform-limit-continuity.yaml` — **VALID**
 
 ## Deliberately invalid fixtures
 
-- `causal_cycle.yaml` — **REJECTED as expected** — CAUSAL_CYCLE: event causal graph must be acyclic
-- `generic_depends_on.yaml` — **REJECTED as expected** — RELATION_SIGNATURE: unknown generic `depends_on`
-- `scope_leak.yaml` — **REJECTED as expected** — branch-local Claim cannot be used for reasoning from parent scope without export/import
+- `invalid/causal-cycle.yaml` — **REJECTED as expected** — causal event graph contains a cycle.
+- `invalid/generic-depends-on.yaml` — **REJECTED as expected** — generic `depends_on` has no registered relation signature.
+- `invalid/scope-leak.yaml` — **REJECTED as expected** — a branch-local Claim is used for reasoning from the parent proof scope without export/import.
 
 ## Result
 
@@ -18,13 +18,15 @@ The candidate passed all 3 positive complete-proof serializations and rejected a
 
 Validated semantic mechanisms include:
 
-- global stable IDs and references
+- graph metadata and globally stable IDs
+- entity / Claim / process / theorem / PresentationSpan typing
 - scope hierarchy and reasoning visibility
 - relation signature mode/layer/type/cardinality checks
-- n-ary event participants
-- causal-parent reference validation
+- role-based n-ary event participants
+- event causal-parent reference validation
 - causal DAG acyclicity
-- presentation-span / mention integrity
+- presentation sequence and Mention integrity
 - distinction between graph addressability and reasoning visibility
+- explicit export/import consistency
 
 This is sufficient evidence to publish the format as a **v1 candidate**, not yet a stable v1.0 schema.
