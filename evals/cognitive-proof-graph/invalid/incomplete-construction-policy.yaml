@@ -1,0 +1,20 @@
+schema_version: 1.0-rc1
+graph: {id: G_bad_policy, title: Invalid incomplete construction policy, status: invalid, root_scope: S_proof}
+entities:
+- {id: E_sub, kind: MathematicalEntity, home_scope: S_proof, canonical_label: subsequence}
+- id: P_bad
+  kind: ConstructionPolicy
+  home_scope: S_proof
+  canonical_label: incomplete policy
+  process_profile:
+    state: previous index
+    admissible_choices: later indices
+    progress_measure: k increases
+    generated_artifact: E_sub
+scopes:
+- {id: S_proof, kind: proof, status: active, local_bindings: [E_sub,P_bad]}
+relations: []
+mentions: []
+relation_signatures: {catalog_version: 1.0-rc1}
+presentation_sequences: []
+validation_invariants: [negative-fixture]
