@@ -1,0 +1,61 @@
+schema_version: 1.0-rc1
+graph:
+  id: G_invalid_generic_depends
+  title: Invalid generic depends_on fixture
+  status: invalid
+  root_scope: S_proof
+  source: null
+  description: Deliberately uses an unknown ambiguous relation type.
+  metadata: {}
+entities:
+- id: C_goal
+  kind: Claim
+  home_scope: S_proof
+  canonical_label: target claim
+  aliases: []
+  proposition_text: P
+  references: []
+  claim_status: goal
+  metadata: {}
+- id: U1
+  kind: Unit
+  home_scope: S_proof
+  canonical_label: proof unit
+  aliases: []
+  process_status: active
+  process_profile: {}
+  metadata: {}
+scopes:
+- id: S_proof
+  kind: proof
+  parent_scope: null
+  status: active
+  active_assumptions: []
+  local_bindings: [C_goal, U1]
+  imports: []
+  exports: []
+  metadata: {}
+relations:
+- id: R_bad
+  semantic_mode: assertion
+  layer: search
+  relation_type: depends_on
+  participants:
+  - role: goal
+    ref: C_goal
+  - role: process
+    ref: U1
+  scope: S_proof
+  evidence:
+    kind: structural_reconstruction
+    detail: null
+  confidence: strong
+  fidelity: null
+  metadata: {}
+mentions: []
+relation_signatures:
+  catalog_version: 1.0-rc1
+  catalog_path: ../../../schema/cognitive-proof-graph/v1/relation-signatures.json
+presentation_sequences: []
+validation_invariants:
+- RV-1 Relation Signature Validity
