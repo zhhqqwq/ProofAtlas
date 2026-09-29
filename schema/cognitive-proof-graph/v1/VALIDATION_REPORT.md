@@ -18,7 +18,7 @@ The candidate passed all 3 positive complete-proof serializations and rejected a
 
 Validated semantic mechanisms include:
 - global stable IDs and references
-- scope hierarchy and reasoning visibility
+- scope hierarchy and reasoning visibility\n- export-event/cache consistency and ancestor direction
 - relation signature mode/layer/type/cardinality checks
 - n-ary event participants
 - causal-parent reference validation
