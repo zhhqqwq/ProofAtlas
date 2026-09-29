@@ -1,0 +1,158 @@
+schema_version: 1.0-rc1
+graph: {id: G_limit_uniqueness, title: Uniqueness of sequence limits, status: validated, root_scope: S_proof}
+entities:
+- {id: E_L, kind: MathematicalEntity, home_scope: S_proof, canonical_label: L, math_kind_hint: scalar, origin_mode: inherited}
+- {id: E_M, kind: MathematicalEntity, home_scope: S_proof, canonical_label: M, math_kind_hint: scalar, origin_mode: inherited}
+- {id: E_half, kind: MathematicalEntity, home_scope: S_proof, canonical_label: 1/2, math_kind_hint: scalar, origin_mode: inherited}
+- {id: E_N1, kind: MathematicalEntity, home_scope: S_route, canonical_label: N_1, math_kind_hint: index_threshold, origin_mode: theorem_supplied}
+- {id: E_N2, kind: MathematicalEntity, home_scope: S_route, canonical_label: N_2, math_kind_hint: index_threshold, origin_mode: theorem_supplied}
+- {id: E_N, kind: MathematicalEntity, home_scope: S_route, canonical_label: N, math_kind_hint: index_threshold, origin_mode: derived}
+- id: F_budget
+  kind: SearchSpace
+  home_scope: S_route
+  canonical_label: two-term epsilon allocations
+  process_profile: {search_space_kind: budget_family}
+- {id: U_bridge, kind: Unit, home_scope: S_route, canonical_label: bridge L and M through a_n}
+- {id: U_N1, kind: Unit, home_scope: S_route, canonical_label: obtain threshold for convergence to L}
+- {id: U_N2, kind: Unit, home_scope: S_route, canonical_label: obtain threshold for convergence to M}
+- {id: U_merge, kind: Unit, home_scope: S_route, canonical_label: merge thresholds}
+- {id: C_goal, kind: Claim, home_scope: S_route, canonical_label: limits are equal, proposition_text: "L=M", references: [E_L,E_M], claim_status: goal}
+- {id: C_convL, kind: Claim, home_scope: S_proof, canonical_label: a_n converges to L, proposition_text: "a_n -> L", references: [E_L], claim_status: given}
+- {id: C_convM, kind: Claim, home_scope: S_proof, canonical_label: a_n converges to M, proposition_text: "a_n -> M", references: [E_M], claim_status: given}
+- {id: C_b1, kind: Claim, home_scope: S_route, canonical_label: L-error below epsilon/2, proposition_text: "n>=N_1 implies |a_n-L|<epsilon/2", references: [E_N1,E_L,E_half], claim_status: proved}
+- {id: C_b2, kind: Claim, home_scope: S_route, canonical_label: M-error below epsilon/2, proposition_text: "n>=N_2 implies |a_n-M|<epsilon/2", references: [E_N2,E_M,E_half], claim_status: proved}
+- {id: C_N, kind: Claim, home_scope: S_route, canonical_label: merged threshold, proposition_text: "N=max{N_1,N_2}", references: [E_N,E_N1,E_N2], claim_status: proved}
+- id: P_bounds
+  kind: PresentationSpan
+  home_scope: S_route
+  canonical_label: two convergence thresholds
+  presentation_profile: {text: "Choose N_1,N_2 so that the two errors are < ε/2.", document_id: limit-uniqueness-proof}
+- id: P_merge
+  kind: PresentationSpan
+  home_scope: S_route
+  canonical_label: max merge
+  presentation_profile: {text: "Let N=max{N_1,N_2}.", document_id: limit-uniqueness-proof}
+- id: P_final
+  kind: PresentationSpan
+  home_scope: S_route
+  canonical_label: triangle inequality conclusion
+  presentation_profile: {text: "For n>=N, |L-M|<=|L-a_n|+|a_n-M|<ε.", document_id: limit-uniqueness-proof}
+scopes:
+- {id: S_proof, kind: proof, status: active}
+- {id: S_route, kind: route, parent_scope: S_proof, status: active, local_bindings: [E_N1,E_N2,E_N,F_budget,U_bridge,U_N1,U_N2,U_merge,C_goal,C_b1,C_b2,C_N]}
+relations:
+- id: R_goal
+  semantic_mode: assertion
+  layer: search
+  relation_type: goal_of
+  participants: [{role: goal, ref: C_goal},{role: process, ref: U_bridge}]
+  scope: S_route
+  evidence: {kind: structural_reconstruction}
+  confidence: strong
+- id: R_budget_member
+  semantic_mode: assertion
+  layer: search
+  relation_type: candidate_in
+  participants: [{role: candidate, ref: E_half},{role: search_space, ref: F_budget}]
+  scope: S_route
+  evidence: {kind: structural_reconstruction}
+  confidence: strong
+- id: R_budget_select
+  semantic_mode: event
+  layer: search
+  relation_type: select
+  participants: [{role: selector, ref: U_bridge},{role: search_space, ref: F_budget},{role: selected, ref: E_half}]
+  scope: S_route
+  evidence: {kind: m3_forward_reconstruction}
+  confidence: strong
+  fidelity: M3-provisional
+  event: {outputs: [E_half], causal_parents: [], outcome: symmetric_budget}
+  provenance:
+    kind: constant
+    parents: [F_budget]
+    origin_mode: chosen
+    value_necessity: not_necessary
+    role_necessity: necessary
+    route_necessity: necessary
+    optimality: nonoptimal_but_simple
+    alternatives: [asymmetric epsilon split]
+- id: R_N1
+  semantic_mode: event
+  layer: search
+  relation_type: produce
+  participants: [{role: producer, ref: U_N1},{role: output, ref: E_N1},{role: output, ref: C_b1}]
+  scope: S_route
+  evidence: {kind: mathematical_derivation}
+  confidence: strong
+  event: {preconditions: [C_convL], outputs: [E_N1,C_b1], causal_parents: [R_budget_select], outcome: threshold_obtained}
+- id: R_N2
+  semantic_mode: event
+  layer: search
+  relation_type: produce
+  participants: [{role: producer, ref: U_N2},{role: output, ref: E_N2},{role: output, ref: C_b2}]
+  scope: S_route
+  evidence: {kind: mathematical_derivation}
+  confidence: strong
+  event: {preconditions: [C_convM], outputs: [E_N2,C_b2], causal_parents: [R_budget_select], outcome: threshold_obtained}
+- id: R_indep
+  semantic_mode: assertion
+  layer: search
+  relation_type: causally_independent_of
+  participants: [{role: event, ref: R_N1},{role: event, ref: R_N2}]
+  scope: S_route
+  evidence: {kind: structural_reconstruction}
+  confidence: strong
+- id: R_merge
+  semantic_mode: event
+  layer: search
+  relation_type: merge
+  participants: [{role: input, ref: E_N1},{role: input, ref: E_N2},{role: output, ref: E_N},{role: output, ref: C_N}]
+  scope: S_route
+  evidence: {kind: constraint_provenance}
+  confidence: strong
+  event: {preconditions: [C_b1,C_b2], outputs: [E_N,C_N], causal_parents: [R_N1,R_N2], outcome: merged}
+  provenance: {kind: mixed, parents: [E_N1,E_N2], origin_mode: derived, role_necessity: necessary, route_necessity: necessary}
+- id: R_final
+  semantic_mode: event
+  layer: logical
+  relation_type: establish_claim
+  participants: [{role: actor, ref: U_bridge},{role: evidence, ref: C_b1},{role: evidence, ref: C_b2},{role: evidence, ref: C_N},{role: conclusion, ref: C_goal}]
+  scope: S_route
+  evidence: {kind: mathematical_derivation}
+  confidence: certain
+  event: {preconditions: [C_b1,C_b2,C_N], outputs: [C_goal], causal_parents: [R_merge], outcome: proved}
+- id: R_bounds_map
+  semantic_mode: assertion
+  layer: cross_layer
+  relation_type: compressed_into
+  participants: [{role: source, ref: R_budget_select},{role: source, ref: R_N1},{role: source, ref: R_N2},{role: target, ref: P_bounds}]
+  scope: S_route
+  evidence: {kind: explicit_text}
+  confidence: strong
+  loss_profile: [motivation_loss,constant_provenance_loss]
+- id: R_merge_map
+  semantic_mode: assertion
+  layer: cross_layer
+  relation_type: presented_as
+  participants: [{role: source, ref: R_merge},{role: target, ref: P_merge}]
+  scope: S_route
+  evidence: {kind: explicit_text}
+  confidence: certain
+- id: R_final_map
+  semantic_mode: assertion
+  layer: cross_layer
+  relation_type: presented_as
+  participants: [{role: source, ref: R_final},{role: target, ref: P_final}]
+  scope: S_route
+  evidence: {kind: explicit_text}
+  confidence: certain
+mentions:
+- {id: M_half1, entity_id: E_half, scope: S_route, view: presentation, source_span: P_bounds, surface_form: 1/2, role_in_span: first error budget}
+- {id: M_half2, entity_id: E_half, scope: S_route, view: presentation, source_span: P_bounds, surface_form: 1/2, role_in_span: second error budget}
+- {id: M_N1, entity_id: E_N1, scope: S_route, view: presentation, source_span: P_merge, surface_form: N_1, role_in_span: merge input}
+- {id: M_N2, entity_id: E_N2, scope: S_route, view: presentation, source_span: P_merge, surface_form: N_2, role_in_span: merge input}
+- {id: M_N, entity_id: E_N, scope: S_route, view: presentation, source_span: P_merge, surface_form: N, role_in_span: merged threshold}
+relation_signatures: {catalog_version: 1.0-rc1}
+presentation_sequences:
+- {id: SEQ_limituniq, document_id: limit-uniqueness-proof, ordered_spans: [P_bounds,P_merge,P_final]}
+validation_invariants: [stress-tested]
