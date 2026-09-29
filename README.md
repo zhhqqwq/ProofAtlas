@@ -14,7 +14,7 @@ Three core layers now have implementation candidates:
 
 - **Motivation Fidelity / M3 Search Protocol v1.0-rc1** — answer-independent reconstruction of why a construction could reasonably be tried.
 - **Construction Archaeology v1.0-rc1** — end-to-end reconstruction of Units, Episodes, Routes, constraints, constants, construction policies, and Search-to-Presentation compression.
-- **Cognitive Proof Graph schema v1 candidate** — a machine-verifiable scoped, layered, role-based relational representation with JSON Schema, relation signatures, a semantic validator, and validated full-proof examples.
+- **Cognitive Proof Graph schema 1.0-rc1** — a machine-verifiable scoped, layered, role-based relational representation; stress-tested on nine complete proofs and frozen as the first stable internal data protocol (public status remains v1 candidate / rc1).
 
 ## Why ProofAtlas?
 
@@ -65,7 +65,7 @@ The schema candidate lives at:
 schema/cognitive-proof-graph/v1/
 ```
 
-It is tested with complete serializations of uniform-limit continuity, Heine–Cantor, and the positive-lower-bound theorem on compact sets, plus deliberately invalid fixtures.
+It is stress-tested with nine complete proof serializations spanning epsilon-delta constructions, recursive subsequences, alternative routes, theorem preparation, min/max merges, and presentation compression, plus six deliberately invalid fixtures.
 
 ## Repository layout
 
