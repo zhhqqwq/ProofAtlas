@@ -18,7 +18,7 @@ The JSON Schema validates local structure. `validate_cpg.py` validates graph-wid
 11. Logical/search participants must be reasoning-visible in relation scope, except explicit produce/export/call/return rules.
 12. Cross-layer archaeology mappings require graph addressability, not reasoning visibility.
 13. Export changes visibility but not entity identity.
-14. Sibling-route local objects do not become mutually visible without explicit import/export.
+14. Sibling-route local objects do not become mutually visible without explicit import/export.\n15. Export events must agree with source-scope exports, target-scope imports, and ancestor direction.
 
 ## Causality invariants
 15. Event causal-parent graph is acyclic.
