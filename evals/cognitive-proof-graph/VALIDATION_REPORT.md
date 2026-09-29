@@ -1,32 +1,48 @@
 # CPG Schema v1 Candidate — Validation Report
 
-## Positive complete-proof serializations
+## Complete proof serializations
 
+- `uniform-limit-continuity.yaml` — **VALID**
 - `heine-cantor.yaml` — **VALID**
 - `positive-compact-lower-bound.yaml` — **VALID**
-- `uniform-limit-continuity.yaml` — **VALID**
+- `x2-continuity.yaml` — **VALID**
+- `reciprocal-continuity.yaml` — **VALID**
+- `differentiable-implies-continuous.yaml` — **VALID**
+- `limsup-subsequence.yaml` — **VALID**
+- `interval-fixed-point.yaml` — **VALID**
+- `limit-uniqueness.yaml` — **VALID**
 
 ## Deliberately invalid fixtures
 
-- `invalid/causal-cycle.yaml` — **REJECTED as expected** — causal event graph contains a cycle.
-- `invalid/generic-depends-on.yaml` — **REJECTED as expected** — generic `depends_on` has no registered relation signature.
-- `invalid/scope-leak.yaml` — **REJECTED as expected** — a branch-local Claim is used for reasoning from the parent proof scope without export/import.
+- `invalid/causal-cycle.yaml` — **REJECTED as expected**
+- `invalid/generic-depends-on.yaml` — **REJECTED as expected**
+- `invalid/scope-leak.yaml` — **REJECTED as expected**
+- `invalid/incomplete-construction-policy.yaml` — **REJECTED as expected**
+- `invalid/invalid-return-scope.yaml` — **REJECTED as expected**
+- `invalid/invalid-constant-provenance.yaml` — **REJECTED as expected**
 
 ## Result
 
-The candidate passed all 3 positive complete-proof serializations and rejected all 3 negative fixtures.
+**9/9 complete proof graphs VALID.**
 
-Validated semantic mechanisms include:
+**6/6 invalid fixtures REJECTED.**
 
-- graph metadata and globally stable IDs
-- entity / Claim / process / theorem / PresentationSpan typing
-- scope hierarchy and reasoning visibility
-- relation signature mode/layer/type/cardinality checks
-- role-based n-ary event participants
-- event causal-parent reference validation
-- causal DAG acyclicity
-- presentation sequence and Mention integrity
-- distinction between graph addressability and reasoning visibility
-- explicit export/import consistency
+The stress pass validates:
 
-This is sufficient evidence to publish the format as a **v1 candidate**, not yet a stable v1.0 schema.
+- stable graph IDs and references;
+- Claim / MathematicalEntity separation;
+- scope hierarchy and reasoning visibility;
+- explicit export/import consistency;
+- relation-signature mode/layer/type/cardinality;
+- role-based n-ary events;
+- recursive ConstructionPolicy contracts;
+- child Episode call/return scope;
+- typed constant provenance;
+- explicit audited causal independence;
+- causal DAG acyclicity;
+- presentation-span and Mention integrity;
+- Search-to-Presentation compression.
+
+Freeze recommendation: **approve `schema_version: 1.0-rc1` as ProofAtlas's first stable internal Cognitive Proof Graph protocol.**
+
+Public status remains **v1 candidate / rc1**, not stable public v1.0.
