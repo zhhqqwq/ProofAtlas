@@ -1,0 +1,26 @@
+schema_version: 1.0-rc1
+graph: {id: G_bad_return, title: Invalid child-to-sibling return, status: invalid, root_scope: S_proof}
+entities:
+- {id: EP_parent, kind: Episode, home_scope: S_route, canonical_label: parent episode}
+- {id: EP_child, kind: Episode, home_scope: S_child, canonical_label: child episode}
+- {id: EP_sibling, kind: Episode, home_scope: S_sibling, canonical_label: unrelated sibling episode}
+- {id: E_out, kind: MathematicalEntity, home_scope: S_child, canonical_label: returned artifact}
+scopes:
+- {id: S_proof, kind: proof, status: active}
+- {id: S_route, kind: route, parent_scope: S_proof, status: active, local_bindings: [EP_parent]}
+- {id: S_child, kind: episode, parent_scope: S_route, status: closed, local_bindings: [EP_child,E_out]}
+- {id: S_sibling, kind: route, parent_scope: S_proof, status: active, local_bindings: [EP_sibling]}
+relations:
+- id: R_bad_return
+  semantic_mode: event
+  layer: search
+  relation_type: return
+  participants: [{role: callee, ref: EP_child},{role: caller, ref: EP_sibling},{role: output, ref: E_out}]
+  scope: S_child
+  evidence: {kind: structural_reconstruction}
+  confidence: strong
+  event: {outputs: [E_out], causal_parents: [], outcome: returned}
+mentions: []
+relation_signatures: {catalog_version: 1.0-rc1}
+presentation_sequences: []
+validation_invariants: [negative-fixture]
