@@ -86,6 +86,10 @@ def validate_graph(g, schema=None, signatures=None):
         for r in e.get("references",[]):
             if r not in entities:
                 errors.append(f"ENTITY_REFERENCE: {e['id']} -> missing {r}")
+        if e.get("kind")=="ConstructionPolicy":
+            art=e.get("process_profile",{}).get("generated_artifact")
+            if art and art not in entities:
+                errors.append(f"POLICY_ARTIFACT: {e['id']} generated_artifact missing {art}")
 
     sigs=(signatures or {}).get("signatures",{})
     for r in relations.values():
@@ -116,7 +120,7 @@ def validate_graph(g, schema=None, signatures=None):
                 if ref in entities:
                     actual=entities[ref]["kind"]
                 elif ref in relations:
-                    actual="RelationEvent"
+                    actual="RelationEvent" if relations[ref].get("semantic_mode")=="event" else "RelationAssertion"
                 elif ref in scopes:
                     actual="Scope"
                 elif ref in mentions:
