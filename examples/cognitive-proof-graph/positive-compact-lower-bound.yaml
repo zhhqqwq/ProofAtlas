@@ -1,0 +1,295 @@
+schema_version: 1.0-rc1
+graph:
+  id: G_positive_lower_bound
+  title: Positive continuous function on compact set has positive lower bound
+  status: validated
+  root_scope: S_proof
+  source: null
+  description: null
+  metadata: {}
+entities:
+- id: E_f
+  kind: MathematicalEntity
+  home_scope: S_proof
+  canonical_label: f
+  aliases: []
+  metadata: {}
+  math_kind_hint: function
+  origin_mode: inherited
+- id: E_K
+  kind: MathematicalEntity
+  home_scope: S_proof
+  canonical_label: K
+  aliases: []
+  metadata: {}
+  math_kind_hint: set
+  origin_mode: inherited
+- id: C_goal
+  kind: Claim
+  home_scope: S_proof
+  canonical_label: positive lower bound exists
+  aliases: []
+  metadata: {}
+  proposition_text: exists m>0 such that forall x in K, f(x)>=m
+  references: [E_f, E_K]
+  claim_status: goal
+- id: R1
+  kind: Route
+  home_scope: S_R1
+  canonical_label: contradiction route
+  aliases: []
+  metadata: {}
+  process_status: completed
+  process_profile: {status: accepted_reference}
+- id: R2
+  kind: Route
+  home_scope: S_R2
+  canonical_label: EVT route
+  aliases: []
+  metadata: {}
+  process_status: completed
+  process_profile: {status: accepted_alternative}
+- id: U_seq
+  kind: Unit
+  home_scope: S_R1
+  canonical_label: construct bad sequence
+  aliases: []
+  metadata: {}
+  process_status: completed
+  process_profile: {}
+- id: E_xn
+  kind: MathematicalEntity
+  home_scope: S_R1
+  canonical_label: (x_n)
+  aliases: []
+  metadata: {}
+  math_kind_hint: sequence
+  origin_mode: chosen
+- id: C_small
+  kind: Claim
+  home_scope: S_R1
+  canonical_label: f(x_n)<1/n
+  aliases: []
+  metadata: {}
+  proposition_text: f(x_n)<1/n
+  references: [E_f, E_xn]
+  claim_status: proved
+- id: T_EVT
+  kind: Theorem
+  home_scope: S_proof
+  canonical_label: Extreme Value Theorem
+  aliases: []
+  metadata: {}
+  knowledge_profile: {name: Extreme Value Theorem}
+- id: E_m
+  kind: MathematicalEntity
+  home_scope: S_R2
+  canonical_label: m
+  aliases: []
+  metadata: {}
+  math_kind_hint: scalar
+  origin_mode: theorem_supplied
+- id: C_min
+  kind: Claim
+  home_scope: S_R2
+  canonical_label: m=min_K f
+  aliases: []
+  metadata: {}
+  proposition_text: m = min_{x in K} f(x)
+  references: [E_m, E_f, E_K]
+  claim_status: proved
+- id: C_pos
+  kind: Claim
+  home_scope: S_R2
+  canonical_label: m>0
+  aliases: []
+  metadata: {}
+  proposition_text: m>0
+  references: [E_m]
+  claim_status: proved
+- id: P_ref
+  kind: PresentationSpan
+  home_scope: S_R1
+  canonical_label: reference contradiction proof
+  aliases: []
+  metadata: {}
+  presentation_profile:
+    text: choose x_n with f(x_n)<1/n ...
+    document_id: positive-lower-bound-proof
+scopes:
+- id: S_proof
+  kind: proof
+  parent_scope: null
+  status: active
+  active_assumptions: []
+  local_bindings: []
+  imports: []
+  exports: []
+  metadata: {}
+- id: S_R1
+  kind: route
+  parent_scope: S_proof
+  status: active
+  active_assumptions: []
+  local_bindings: [R1, U_seq, E_xn, C_small]
+  imports: []
+  exports: []
+  metadata: {route_status: accepted_reference}
+- id: S_R2
+  kind: route
+  parent_scope: S_proof
+  status: active
+  active_assumptions: []
+  local_bindings: [R2, E_m, C_min, C_pos]
+  imports: []
+  exports: []
+  metadata: {route_status: accepted_alternative}
+relations:
+- id: R_goal1
+  semantic_mode: assertion
+  layer: search
+  relation_type: goal_of
+  participants:
+  - {role: goal, ref: C_goal}
+  - {role: process, ref: R1}
+  scope: S_R1
+  evidence: {kind: structural_reconstruction, detail: null}
+  confidence: strong
+  fidelity: null
+  metadata: {}
+- id: R_goal2
+  semantic_mode: assertion
+  layer: search
+  relation_type: goal_of
+  participants:
+  - {role: goal, ref: C_goal}
+  - {role: process, ref: R2}
+  scope: S_R2
+  evidence: {kind: structural_reconstruction, detail: null}
+  confidence: strong
+  fidelity: null
+  metadata: {}
+- id: R_alt
+  semantic_mode: assertion
+  layer: search
+  relation_type: alternative_to
+  participants:
+  - {role: alternative, ref: R1}
+  - {role: alternative, ref: R2}
+  scope: S_proof
+  evidence: {kind: structural_reconstruction, detail: null}
+  confidence: strong
+  fidelity: null
+  metadata: {}
+- id: R_make_seq
+  semantic_mode: event
+  layer: search
+  relation_type: produce
+  participants:
+  - {role: producer, ref: U_seq}
+  - {role: output, ref: E_xn}
+  - {role: output, ref: C_small}
+  scope: S_R1
+  evidence: {kind: m3_forward_reconstruction, detail: null}
+  confidence: strong
+  fidelity: M3-provisional
+  metadata: {}
+  event:
+    preconditions: []
+    outputs: [E_xn, C_small]
+    causal_parents: []
+    outcome: constructed
+    state_delta: {}
+- id: R_evt
+  semantic_mode: event
+  layer: logical
+  relation_type: apply_theorem
+  participants:
+  - {role: theorem, ref: T_EVT}
+  - {role: premise, ref: C_goal}
+  - {role: conclusion, ref: C_min}
+  scope: S_R2
+  evidence: {kind: theorem_instance, detail: null}
+  confidence: certain
+  fidelity: null
+  metadata: {}
+  event:
+    preconditions: []
+    outputs: [C_min]
+    causal_parents: []
+    outcome: proved
+    state_delta: {}
+- id: R_mpos
+  semantic_mode: event
+  layer: logical
+  relation_type: establish_claim
+  participants:
+  - {role: evidence, ref: C_min}
+  - {role: conclusion, ref: C_pos}
+  scope: S_R2
+  evidence: {kind: mathematical_derivation, detail: null}
+  confidence: certain
+  fidelity: null
+  metadata: {}
+  event:
+    preconditions: [C_min]
+    outputs: [C_pos]
+    causal_parents: [R_evt]
+    outcome: proved
+    state_delta: {}
+- id: R_ref_map
+  semantic_mode: assertion
+  layer: cross_layer
+  relation_type: presented_as
+  participants:
+  - {role: source, ref: R1}
+  - {role: source, ref: R_make_seq}
+  - {role: target, ref: P_ref}
+  scope: S_R1
+  evidence: {kind: explicit_text, detail: null}
+  confidence: certain
+  fidelity: null
+  metadata: {}
+- id: R_alt_hidden
+  semantic_mode: assertion
+  layer: cross_layer
+  relation_type: hidden_from
+  participants:
+  - {role: source, ref: R2}
+  scope: S_R2
+  evidence: {kind: structural_reconstruction, detail: null}
+  confidence: strong
+  fidelity: null
+  metadata: {}
+mentions:
+- id: M_xn
+  entity_id: E_xn
+  scope: S_R1
+  view: presentation
+  source_span: P_ref
+  surface_form: x_n
+  role_in_span: bad sequence
+  metadata: {}
+relation_signatures:
+  catalog_version: 1.0-rc1
+  catalog_path: ../../schema/relation-signatures.json
+presentation_sequences:
+- id: SEQ_pos
+  document_id: positive-lower-bound-proof
+  ordered_spans: [P_ref]
+validation_invariants:
+- GI-1 Stable Identity
+- GI-2 No Equality Merge
+- GI-3 Entity/Mention Separation
+- GI-4 Scope Reasoning Visibility
+- GI-5 Explicit Export
+- GI-6 Layer Typing
+- GI-7 Explicit Cross-Layer Mapping
+- GI-8 Causal Partial Order
+- GI-9 Presentation Order Independence
+- GI-10 N-ary Preservation
+- SOI-1 Claim/Object Separation
+- SOI-2 Contextual Roles Do Not Duplicate Entities
+- RV-1 Relation Signature Validity
+- RV-2 Endpoint Type/Cardinality
+- RV-3 Event Causal DAG
