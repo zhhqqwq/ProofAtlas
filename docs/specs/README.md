@@ -2,24 +2,26 @@
 
 Specifications describe intended behavior before stable implementation APIs exist.
 
-## Current maturity
+## Motivation Fidelity — v1.0-rc1
 
-### Motivation Fidelity — active candidate specification
+The M3 Search Protocol is the current implementation candidate for answer-independent motivation reconstruction. It covers Required Property synthesis, Candidate Family generation, blind Candidate Selection, local tests, informative failures, construction policies, and memorization-resistant audits.
 
-Current documents:
+Current files live in `docs/specs/motivation-fidelity/`.
 
-- `M3_Candidate_Search_Model_v0.3.md`
-- `Required_Property_Synthesis_v0.4.md`
-- `Candidate_Family_Generation_v0.5.md`
-- `Candidate_Selection_v0.6.md`
-- `M3_Search_Protocol_v1_Integration_and_Adversarial_Tests.md`
+## Construction Archaeology — v1.0-rc1
 
-The integrated M3 protocol is currently the strongest candidate for implementation.
+Construction Archaeology now has an integrated release-candidate protocol, derived from v0.1–v0.6 and tested end-to-end on nine complete proofs. Its stable core includes Routes, Episodes, Units, Construction Policies, Artifacts, Constraint Events, Constant provenance, causal partial order, and Search-to-Presentation mapping.
 
-### Construction Archaeology — not yet formalized
+See `docs/specs/construction-archaeology/Construction_Archaeology_Protocol_v1.0-rc1.md`.
 
-Concept exists, formal rules do not.
+## Cognitive Proof Graph — schema v1 candidate
 
-### Cognitive Proof Graph — not yet formalized
+The CPG foundations are now specified through:
 
-Concept exists, schema does not.
+- v0.1: identity, scopes, and multi-layer relations;
+- v0.2: core semantic object model;
+- v0.3: relation and event semantics.
+
+A machine-verifiable schema candidate is available under `schema/cognitive-proof-graph/v1/`, with full-proof examples and negative validation fixtures.
+
+See `docs/specs/cognitive-proof-graph/README.md`.
