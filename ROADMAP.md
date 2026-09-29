@@ -33,8 +33,8 @@
 - [x] Publish JSON Schema v1 candidate and relation-signature catalog.
 - [x] Implement semantic validator for references, scope, signatures, cardinality, and causal DAG.
 - [x] Serialize and validate three complete proofs.
-- [x] Add invalid fixtures for generic `depends_on`, scope leakage, and causal cycles.
-- [ ] Expand schema validation to more Construction Archaeology cases.
+- [x] Add invalid fixtures for generic `depends_on`, scope leakage, and causal cycles.\n- [x] Add stress-test fixtures for incomplete policies, invalid returns, and malformed provenance.\n- [x] Freeze `schema_version: 1.0-rc1` as the first stable internal CPG data protocol.
+- [x] Expand schema validation to all nine Construction Archaeology proof cases.
 - [ ] Add learner-aware annotations and proof-pattern objects only when evals justify them.
 
 ## v0.4 — Proof-understanding skill
