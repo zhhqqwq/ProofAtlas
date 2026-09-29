@@ -1,0 +1,29 @@
+schema_version: 1.0-rc1
+graph: {id: G_bad_provenance, title: Invalid constant provenance, status: invalid, root_scope: S_proof}
+entities:
+- {id: E_half, kind: MathematicalEntity, home_scope: S_proof, canonical_label: 1/2}
+- id: F_budget
+  kind: SearchSpace
+  home_scope: S_proof
+  canonical_label: error budgets
+  process_profile: {search_space_kind: budget_family}
+- {id: U_select, kind: Unit, home_scope: S_proof, canonical_label: select budget}
+scopes:
+- {id: S_proof, kind: proof, status: active, local_bindings: [E_half,F_budget,U_select]}
+relations:
+- id: R_bad
+  semantic_mode: event
+  layer: search
+  relation_type: select
+  participants: [{role: selector, ref: U_select},{role: search_space, ref: F_budget},{role: selected, ref: E_half}]
+  scope: S_proof
+  evidence: {kind: structural_reconstruction}
+  confidence: strong
+  event: {outputs: [E_half], causal_parents: [], outcome: accepted}
+  provenance:
+    kind: constant
+    origin_mode: magic
+mentions: []
+relation_signatures: {catalog_version: 1.0-rc1}
+presentation_sequences: []
+validation_invariants: [negative-fixture]
