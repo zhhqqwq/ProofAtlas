@@ -2,9 +2,7 @@
 
 ## Decision
 
-[
-oxed{	ext{FREEZE: schema_version 1.0-rc1 as the first stable internal CPG protocol}}
-]
+**FREEZE: `schema_version: 1.0-rc1` as the first stable internal CPG protocol.**
 
 ## Evidence
 
