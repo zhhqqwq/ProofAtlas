@@ -1,0 +1,61 @@
+schema_version: 1.0-rc1
+graph: {id: G_diff_implies_cont, title: Differentiability implies continuity, status: validated, root_scope: S_proof}
+entities:
+- {id: E_f, kind: MathematicalEntity, home_scope: S_proof, canonical_label: f, math_kind_hint: function, origin_mode: inherited}
+- {id: E_a, kind: MathematicalEntity, home_scope: S_proof, canonical_label: a, math_kind_hint: point, origin_mode: inherited}
+- {id: E_q, kind: MathematicalEntity, home_scope: S_route, canonical_label: difference quotient, math_kind_hint: function, origin_mode: derived}
+- {id: U_repr, kind: Unit, home_scope: S_route, canonical_label: rewrite increment using the difference quotient}
+- {id: C_goal, kind: Claim, home_scope: S_route, canonical_label: continuity at a, proposition_text: "f(x)-f(a) -> 0 as x -> a", references: [E_f,E_a], claim_status: goal}
+- {id: C_diff, kind: Claim, home_scope: S_proof, canonical_label: differentiability at a, proposition_text: "(f(x)-f(a))/(x-a) -> f'(a)", references: [E_f,E_a], claim_status: given}
+- {id: C_zero, kind: Claim, home_scope: S_route, canonical_label: vanishing displacement, proposition_text: "x-a -> 0 as x -> a", references: [E_a], claim_status: given}
+- {id: C_repr, kind: Claim, home_scope: S_route, canonical_label: product representation, proposition_text: "f(x)-f(a)=((f(x)-f(a))/(x-a))(x-a)", references: [E_f,E_a,E_q], claim_status: proved}
+- id: P_identity
+  kind: PresentationSpan
+  home_scope: S_route
+  canonical_label: product representation line
+  presentation_profile: {text: "f(x)-f(a)=[(f(x)-f(a))/(x-a)](x-a).", document_id: diff-cont-proof}
+scopes:
+- {id: S_proof, kind: proof, status: active}
+- {id: S_route, kind: route, parent_scope: S_proof, status: active, local_bindings: [E_q,U_repr,C_goal,C_zero,C_repr]}
+relations:
+- id: R_goal
+  semantic_mode: assertion
+  layer: search
+  relation_type: goal_of
+  participants: [{role: goal, ref: C_goal},{role: process, ref: U_repr}]
+  scope: S_route
+  evidence: {kind: structural_reconstruction}
+  confidence: strong
+- id: R_produce_q
+  semantic_mode: event
+  layer: search
+  relation_type: produce
+  participants: [{role: producer, ref: U_repr},{role: output, ref: E_q},{role: output, ref: C_repr}]
+  scope: S_route
+  evidence: {kind: m3_forward_reconstruction}
+  confidence: strong
+  fidelity: M3-provisional
+  event: {preconditions: [C_diff], outputs: [E_q,C_repr], causal_parents: [], outcome: representation_constructed}
+- id: R_final
+  semantic_mode: event
+  layer: logical
+  relation_type: establish_claim
+  participants: [{role: actor, ref: U_repr},{role: evidence, ref: C_diff},{role: evidence, ref: C_zero},{role: evidence, ref: C_repr},{role: conclusion, ref: C_goal}]
+  scope: S_route
+  evidence: {kind: mathematical_derivation}
+  confidence: certain
+  event: {preconditions: [C_diff,C_zero,C_repr], outputs: [C_goal], causal_parents: [R_produce_q], outcome: proved}
+- id: R_repr_present
+  semantic_mode: assertion
+  layer: cross_layer
+  relation_type: presented_as
+  participants: [{role: source, ref: R_produce_q},{role: source, ref: C_repr},{role: target, ref: P_identity}]
+  scope: S_route
+  evidence: {kind: explicit_text}
+  confidence: certain
+mentions:
+- {id: M_q, entity_id: E_q, scope: S_route, view: presentation, source_span: P_identity, surface_form: "(f(x)-f(a))/(x-a)", role_in_span: difference quotient}
+relation_signatures: {catalog_version: 1.0-rc1}
+presentation_sequences:
+- {id: SEQ_diff, document_id: diff-cont-proof, ordered_spans: [P_identity]}
+validation_invariants: [stress-tested]
