@@ -1,0 +1,171 @@
+{
+  "version": "1.0-rc1",
+  "signatures": {
+    "goal_of": {
+      "semantic_mode": "assertion",
+      "layer": "search",
+      "roles": {
+        "goal": {"allowed":["Claim"],"min":1,"max":1},
+        "process": {"allowed":["Route","Episode","Unit","ConstructionPolicy"],"min":1,"max":1}
+      },
+      "scope_policy":"reasoning_visible"
+    },
+    "candidate_in": {
+      "semantic_mode":"assertion","layer":"search",
+      "roles":{
+        "candidate":{"allowed":["MathematicalEntity","ConstructionPolicy","Theorem"],"min":1},
+        "search_space":{"allowed":["SearchSpace"],"min":1,"max":1}
+      },
+      "scope_policy":"reasoning_visible"
+    },
+    "motivates": {
+      "semantic_mode":"assertion","layer":"search",
+      "roles":{
+        "reason":{"allowed":["Claim","Route","Episode","Unit"],"min":1},
+        "motivated":{"allowed":["Route","Episode","Unit","ConstructionPolicy","SearchSpace","MathematicalEntity","Theorem"],"min":1}
+      },
+      "scope_policy":"reasoning_visible","requires_fidelity":true
+    },
+    "select": {
+      "semantic_mode":"event","layer":"search",
+      "roles":{
+        "selector":{"allowed":["Unit","ConstructionPolicy"],"min":1,"max":1},
+        "search_space":{"allowed":["SearchSpace"],"min":1,"max":1},
+        "selected":{"allowed":["MathematicalEntity","ConstructionPolicy","Theorem"],"min":1}
+      },
+      "scope_policy":"reasoning_visible","causal":true
+    },
+    "produce": {
+      "semantic_mode":"event","layer":"search",
+      "roles":{
+        "producer":{"allowed":["Route","Episode","Unit","ConstructionPolicy"],"min":1,"max":1},
+        "output":{"allowed":["MathematicalEntity","Claim","SearchSpace","ConstructionPolicy"],"min":1}
+      },
+      "scope_policy":"reasoning_visible_or_created_here","causal":true
+    },
+    "specialize": {
+      "semantic_mode":"event","layer":"search",
+      "roles":{
+        "general":{"allowed":["MathematicalEntity","Claim","SearchSpace"],"min":1},
+        "specific":{"allowed":["MathematicalEntity","Claim","SearchSpace"],"min":1}
+      },
+      "scope_policy":"reasoning_visible","causal":true
+    },
+    "strengthen": {
+      "semantic_mode":"event","layer":"search",
+      "roles":{
+        "old_constraint":{"allowed":["Claim"],"min":1,"max":1},
+        "new_constraint":{"allowed":["Claim"],"min":1,"max":1}
+      },
+      "scope_policy":"reasoning_visible","causal":true
+    },
+    "merge": {
+      "semantic_mode":"event","layer":"search",
+      "roles":{
+        "input":{"allowed":["MathematicalEntity","Claim","SearchSpace"],"min":2},
+        "output":{"allowed":["MathematicalEntity","Claim","SearchSpace"],"min":1}
+      },
+      "scope_policy":"reasoning_visible","causal":true
+    },
+    "apply_theorem": {
+      "semantic_mode":"event","layer":"logical",
+      "roles":{
+        "theorem":{"allowed":["Theorem"],"min":1,"max":1},
+        "premise":{"allowed":["Claim"],"min":1},
+        "conclusion":{"allowed":["Claim"],"min":1}
+      },
+      "scope_policy":"reasoning_visible","causal":true
+    },
+    "establish_claim": {
+      "semantic_mode":"event","layer":"logical",
+      "roles":{
+        "actor":{"allowed":["Route","Episode","Unit","ConstructionPolicy"],"min":0,"max":1},
+        "evidence":{"allowed":["Claim","RelationEvent"],"min":1},
+        "conclusion":{"allowed":["Claim"],"min":1}
+      },
+      "scope_policy":"reasoning_visible","causal":true
+    },
+    "logically_depends_on": {
+      "semantic_mode":"assertion","layer":"logical",
+      "roles":{
+        "dependency":{"allowed":["Claim"],"min":1},
+        "dependent":{"allowed":["Claim"],"min":1,"max":1}
+      },
+      "scope_policy":"reasoning_visible"
+    },
+    "equal_to": {
+      "semantic_mode":"assertion","layer":"logical",
+      "roles":{
+        "left":{"allowed":["MathematicalEntity"],"min":1,"max":1},
+        "right":{"allowed":["MathematicalEntity"],"min":1,"max":1}
+      },
+      "scope_policy":"reasoning_visible","symmetric":true
+    },
+    "call": {
+      "semantic_mode":"event","layer":"search",
+      "roles":{
+        "caller":{"allowed":["Episode","Unit","ConstructionPolicy"],"min":1,"max":1},
+        "callee":{"allowed":["Episode","ConstructionPolicy"],"min":1,"max":1},
+        "input":{"allowed":["MathematicalEntity","Claim","SearchSpace"],"min":0}
+      },
+      "scope_policy":"reasoning_visible","causal":true
+    },
+    "return": {
+      "semantic_mode":"event","layer":"search",
+      "roles":{
+        "callee":{"allowed":["Episode","ConstructionPolicy"],"min":1,"max":1},
+        "caller":{"allowed":["Episode","Unit","ConstructionPolicy"],"min":1,"max":1},
+        "output":{"allowed":["MathematicalEntity","Claim","SearchSpace"],"min":1}
+      },
+      "scope_policy":"special_return_rule","causal":true
+    },
+    "export": {
+      "semantic_mode":"event","layer":"cross_layer",
+      "roles":{
+        "exported":{"allowed":["MathematicalEntity","Claim","SearchSpace","ConstructionPolicy"],"min":1},
+        "source_scope":{"allowed":["Scope"],"min":1,"max":1},
+        "target_scope":{"allowed":["Scope"],"min":1,"max":1}
+      },
+      "scope_policy":"special_export_rule","causal":true
+    },
+    "alternative_to": {
+      "semantic_mode":"assertion","layer":"search",
+      "roles":{
+        "alternative":{"allowed":["Route","SearchSpace","MathematicalEntity","ConstructionPolicy","Theorem"],"min":2}
+      },
+      "scope_policy":"graph_addressable","symmetric":true
+    },
+    "presented_as": {
+      "semantic_mode":"assertion","layer":"cross_layer",
+      "roles":{
+        "source":{"allowed":["MathematicalEntity","Claim","Route","Episode","Unit","ConstructionPolicy","SearchSpace","Theorem","RelationEvent"],"min":1},
+        "target":{"allowed":["PresentationSpan"],"min":1}
+      },
+      "scope_policy":"graph_addressable"
+    },
+    "compressed_into": {
+      "semantic_mode":"assertion","layer":"cross_layer",
+      "roles":{
+        "source":{"allowed":["MathematicalEntity","Claim","Route","Episode","Unit","ConstructionPolicy","SearchSpace","Theorem","RelationEvent"],"min":1},
+        "target":{"allowed":["PresentationSpan"],"min":1,"max":1}
+      },
+      "scope_policy":"graph_addressable","requires_loss_profile":true
+    },
+    "hidden_from": {
+      "semantic_mode":"assertion","layer":"cross_layer",
+      "roles":{
+        "source":{"allowed":["MathematicalEntity","Claim","Route","Episode","Unit","ConstructionPolicy","SearchSpace","Theorem","RelationEvent"],"min":1},
+        "presentation":{"allowed":["PresentationSpan"],"min":0}
+      },
+      "scope_policy":"graph_addressable"
+    },
+    "recovered_from": {
+      "semantic_mode":"assertion","layer":"cross_layer",
+      "roles":{
+        "reconstruction":{"allowed":["MathematicalEntity","Claim","Route","Episode","Unit","ConstructionPolicy","SearchSpace","RelationEvent"],"min":1},
+        "source_span":{"allowed":["PresentationSpan"],"min":1}
+      },
+      "scope_policy":"graph_addressable","requires_fidelity":true
+    }
+  }
+}
