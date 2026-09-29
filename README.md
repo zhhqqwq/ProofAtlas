@@ -8,16 +8,13 @@ ProofAtlas is not primarily a theorem prover, proof rewriter, or answer generato
 
 ## Status
 
-**Pre-alpha / open design.**
+**Pre-alpha / open design.** No claim of state-of-the-art performance or measured learning gains is made at this stage.
 
-The most developed component is the **Motivation Fidelity / M3 Search Protocol**, which specifies how an AI should explain *why one might reasonably try a construction* without simply seeing the answer first and inventing a convincing story afterward.
+Three core layers now have implementation candidates:
 
-Two major components are still under active design:
-
-- **Construction Archaeology** — reconstructing how a full mathematical construction forms through constraints, candidate families, failures, parameter choices, and simplifications.
-- **Cognitive Proof Graph** — a machine-readable representation of logical, motivational, strategic, theorem-role, construction, constraint, and constant-provenance relationships inside proofs.
-
-No claim of state-of-the-art performance or measured learning gains is made at this stage.
+- **Motivation Fidelity / M3 Search Protocol v1.0-rc1** — answer-independent reconstruction of why a construction could reasonably be tried.
+- **Construction Archaeology v1.0-rc1** — end-to-end reconstruction of Units, Episodes, Routes, constraints, constants, construction policies, and Search-to-Presentation compression.
+- **Cognitive Proof Graph schema v1 candidate** — a machine-verifiable scoped, layered, role-based relational representation with JSON Schema, relation signatures, a semantic validator, and validated full-proof examples.
 
 ## Why ProofAtlas?
 
@@ -33,77 +30,70 @@ A polished mathematical proof often hides the very information a learner needs m
 
 ProofAtlas treats these as first-class learning problems.
 
-## Core ideas
+## Core architecture
 
-### Motivation Fidelity
+### 1. Motivation Fidelity
 
-Separate:
+Separates **why a step works** from **why one might reasonably try it**. Reference proofs are comparison targets, not search objectives.
 
-- **why a step works**, from
-- **why someone might reasonably try it before seeing the answer**.
+### 2. Construction Archaeology
 
-The current protocol uses an answer-independent search structure:
+Recovers how a complete construction forms:
 
 ```text
-Goal
-  → Obstacle
-  → Available Information
-  → Required Property
-  → Candidate Family
-  → Candidate Pool
-  → Candidate Selection
-  → Local Test
-  → Search-State Update
+Polished Proof
+  → Construction Units
+  → Construction Episodes / Routes
+  → Constraint Ledger
+  → Constant Provenance
+  → Search-to-Presentation Map
 ```
 
-### No Hindsight Leakage
+### 3. Cognitive Proof Graph
 
-Reference proofs are evidence to compare against, not an optimization target. A candidate should not be called "natural" merely because it appears in the reference solution.
+The CPG is not a line-by-line proof graph. Its current substrate separates:
 
-### Functional Before Form
+- stable mathematical entities from Claims;
+- semantic entities from textual Mentions;
+- scopes from strategy Episodes;
+- logical dependency from search causality and presentation order;
+- assertion relations from state-changing events.
 
-Before proposing a concrete construction, describe what the unknown object must **do**.
+The schema candidate lives at:
 
-### Family Before Instance
+```text
+schema/cognitive-proof-graph/v1/
+```
 
-Before proposing a specific auxiliary function, bridge term, parameter, subsequence, or transformation, define the functional search space it belongs to.
+It is tested with complete serializations of uniform-limit continuity, Heine–Cantor, and the positive-lower-bound theorem on compact sets, plus deliberately invalid fixtures.
 
-### Discovery vs presentation
-
-A construction can be natural to discover but ugly to present; another can be elegant to present but difficult to discover. ProofAtlas keeps these roles separate.
-
-## Current repository layout
+## Repository layout
 
 ```text
 ProofAtlas/
-├── README.md
-├── ROADMAP.md
-├── CONTRIBUTING.md
-├── LICENSE
-├── VERSION
-├── docs/
-│   └── specs/
-│       └── motivation-fidelity/
-├── skills/
-│   └── proof-understanding/
-│       └── SKILL.md
-├── evals/
-│   └── m3-adversarial/
+├── docs/specs/
+│   ├── motivation-fidelity/
+│   ├── construction-archaeology/
+│   └── cognitive-proof-graph/
+├── schema/cognitive-proof-graph/v1/
 ├── examples/
-│   └── analysis/
-└── .github/
-    └── ISSUE_TEMPLATE/
+│   ├── analysis/
+│   └── cognitive-proof-graph/
+├── evals/
+│   ├── m3-adversarial/
+│   ├── construction-archaeology/
+│   └── cognitive-proof-graph/
+└── skills/proof-understanding/SKILL.md
 ```
 
-## Prototype skill
+## Machine-verifiable CPG candidate
 
-The first prototype lives at:
+The schema package uses two validation layers:
 
-```text
-skills/proof-understanding/SKILL.md
-```
+1. **JSON Schema 2020-12** for local structure and types.
+2. **Semantic validator** for global IDs, relation signatures, endpoint types/cardinality, scope visibility, references, and causal-DAG invariants.
 
-It currently focuses on reconstructing nontrivial proof moves without answer-centered hindsight bias. The skill is intentionally experimental and will change as real proof examples reveal failure modes.
+This separation is intentional: graph-wide semantic invariants are not forced into JSON Schema when doing so would make the schema brittle or misleading.
 
 ## Evaluation philosophy
 
@@ -116,8 +106,7 @@ ProofAtlas should not be evaluated only by whether it reproduces a reference sol
 - Were convenient constants distinguished from necessary ones?
 - Did failed attempts provide information gain?
 - Did the explanation help a learner recognize a reusable proof pattern?
-
-The current adversarial test set covers nine analysis-style proof scenarios and deliberately includes cases where the reference solution is **not** the most natural blind choice.
+- Does the machine representation preserve scope, identity, causality, and presentation compression without inventing a unique discovery history?
 
 ## Scope for the first research cycle
 
@@ -140,14 +129,7 @@ See [ROADMAP.md](ROADMAP.md).
 
 ## Contributing
 
-The project is deliberately open-design. Contributions are especially welcome in:
-
-- adversarial proof examples;
-- hindsight-leakage failure cases;
-- proof-learning UX;
-- mathematical-analysis construction patterns;
-- theorem-role taxonomies;
-- evaluation methodology.
+The project is deliberately open-design. Contributions are especially welcome in adversarial proof examples, hindsight-leakage failures, full-proof graph serializations, schema review, proof-learning UX, and evaluation methodology.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
