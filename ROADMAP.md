@@ -9,8 +9,9 @@
 - [x] Specify Candidate Selection.
 - [x] Integrate into M3 Search Protocol v1.0-rc1.
 - [x] Run adversarial tests on analysis proofs.
-- [ ] Run the integrated skill on a larger real corpus.
-- [ ] Collect false-M3, over-analysis, family-too-wide/narrow, and learner-level mismatch failures.
+- [x] Run Integrated Skill v0.2 across a 40-case real-analysis development corpus.
+- [x] Collect first-pass failure pressures: over-analysis, theorem black-boxing, constant overclaim, policy under-specification, witness-origin confusion, causal-order confusion, and reference-route bias.
+- [ ] Add perturbation/isomorphic cases sufficient to promote selected canonical cases from M3-provisional to M3.
 
 ## v0.2 — Construction Archaeology
 
@@ -21,7 +22,8 @@
 - [x] Define Search-to-Presentation mapping.
 - [x] Integrate v0.1–v0.6 into Construction Archaeology Protocol v1.0-rc1.
 - [x] Run nine end-to-end full-proof adversarial tests.
-- [ ] Run CA rc1 on a larger proof corpus before stable public freeze.
+- [x] Exercise CA mechanisms across the 40-case integrated analysis corpus.
+- [ ] Run targeted human review of Unit/Episode boundaries before stable public freeze.
 
 ## v0.3 — Cognitive Proof Graph
 
@@ -31,31 +33,34 @@
 - [x] Define Core Semantic Object Model (`Claim != MathematicalEntity`).
 - [x] Define assertion/event relation semantics and n-ary participant roles.
 - [x] Publish JSON Schema v1 candidate and relation-signature catalog.
-- [x] Implement semantic validator for references, scope, signatures, cardinality, and causal DAG.
+- [x] Implement semantic validator.
 - [x] Serialize and validate all nine Construction Archaeology proof cases.
-- [x] Add invalid fixtures for generic `depends_on`, scope leakage, causal cycles, incomplete policies, invalid returns, and malformed provenance.
-- [x] Freeze `schema_version: 1.0-rc1` as the first stable internal CPG data protocol.
-- [ ] Add learner-aware annotations and proof-pattern objects only when evals justify them.
+- [x] Add invalid fixtures for major semantic failure classes.
+- [x] Freeze `schema_version: 1.0-rc1` as the first stable internal CPG protocol.
+- [ ] Add learner-aware annotations only when learner-output evaluation justifies them.
 
 ## v0.4 — Integrated Proof-understanding Skill
 
 - [x] Integrate Motivation Fidelity, Construction Archaeology rc1, and CPG schema into `skills/proof-understanding/SKILL.md`.
-- [x] Add progressive disclosure modes: map, diagnose, expand, motivate, construct, theorem-role, trace-constant, rederive, compare, teach, verify, quiz.
+- [x] Add progressive disclosure modes.
 - [x] Run nine protocol-contract pipeline adversarial cases.
-- [ ] Run Integrated Skill v0.2 on a larger real analysis corpus.
-- [ ] Evaluate actual learner-facing outputs for clarity, fidelity, transfer value, and over-analysis.
-- [ ] Add an analysis-focused pattern library only from repeated corpus evidence.
+- [x] Build Analysis Integrated Corpus v0.1 with 40 complete proof cases.
+- [x] Generate and structurally audit 40 learner-facing explanation records.
+- [x] Derive Pattern Library v0.1 from repeated corpus mechanisms.
+- [ ] Run human learner-facing review for clarity, calibration, cognitive load, and transfer value.
+- [ ] Add learner-level variants for a selected subset.
 
 ## v0.5 — Benchmark
 
-- [ ] Build Proof Understanding Benchmark.
-- [ ] Measure gap recall / precision.
-- [ ] Measure motivation fidelity and hindsight leakage.
-- [ ] Measure construction explanation and constant provenance.
-- [ ] Measure theorem-role recognition.
-- [ ] Measure progressive-disclosure quality and over-analysis.
-- [ ] Evaluate transfer to unseen but structurally related proofs.
+- [x] Design Proof Understanding Benchmark Alpha from observed failure pressures.
+- [x] Define development / stress / evaluation slices for the 40 public cases.
+- [x] Define 12 evaluation dimensions instead of a single reference-match score.
+- [ ] Implement scoring scripts for machine-checkable dimensions.
+- [ ] Build a hidden external evaluation set.
+- [ ] Add perturbation/isomorphic pairs for Motivation Fidelity.
+- [ ] Run human evaluation for explanation and transfer dimensions.
+- [ ] Validate benchmark reliability before making comparative performance claims.
 
 ## v1.0 — First stable public release
 
-A stable release should require evidence that the system improves proof comprehension without systematically fabricating discovery narratives, plus stable machine-readable representations and an integrated Skill tested across a broader proof corpus.
+A stable release should require evidence that the system improves proof comprehension without systematically fabricating discovery narratives, plus stable machine-readable representations, an integrated Skill tested across a broader corpus, and a benchmark with external/hidden evaluation.
