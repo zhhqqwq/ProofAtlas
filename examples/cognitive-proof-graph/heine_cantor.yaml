@@ -169,7 +169,7 @@ scopes:
   active_assumptions: [C_not_uc]
   local_bindings: [C_not_uc, E_eps0, E_xn, E_yn, E_sub, U_bad, U_extract, C_bad, C_subconv, C_contradiction]
   imports: []
-  exports: [C_uc]
+  exports: [C_contradiction]
   metadata:
     method: contradiction
 relations:
