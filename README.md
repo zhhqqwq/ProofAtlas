@@ -10,18 +10,17 @@ ProofAtlas is not primarily a theorem prover, proof rewriter, or answer generato
 
 **Pre-alpha / open design.** No claim of state-of-the-art performance or measured learning gains is made at this stage.
 
-The project now has three frozen/rc1 protocol layers plus the first integrated product-level Skill candidate:
+The project now has three frozen/rc1 protocol layers, an integrated Skill candidate, and its first larger analysis corpus:
 
 - **Motivation Fidelity / M3 Search Protocol v1.0-rc1** — answer-independent reconstruction of why a construction could reasonably be tried.
-- **Construction Archaeology v1.0-rc1** — end-to-end reconstruction of Units, Episodes, Routes, constraints, constants, construction policies, and Search-to-Presentation compression.
-- **Cognitive Proof Graph schema 1.0-rc1** — a machine-verifiable scoped, layered, role-based relational representation; stress-tested on nine complete proofs and frozen as the first stable internal data protocol.
-- **Integrated ProofAtlas Skill v0.2** — an orchestrator that selectively combines Motivation Fidelity, Construction Archaeology, the CPG, and learner-facing progressive disclosure.
+- **Construction Archaeology v1.0-rc1** — reconstruction of Units, Episodes, Routes, constraints, constants, policies, and Search-to-Presentation compression.
+- **Cognitive Proof Graph schema 1.0-rc1** — machine-verifiable internal protocol; frozen as the first stable internal data protocol.
+- **Integrated ProofAtlas Skill v0.2** — selective orchestrator combining the three layers with learner-facing progressive disclosure.
+- **Analysis Integrated Corpus v0.1** — 40 real-analysis proof cases with routing, hotspots, fidelity calibration, learner-facing explanations, failure-pressure annotations, and benchmark splits.
 
 Public project status remains pre-alpha. CPG public status remains v1 candidate / rc1 rather than stable public v1.0.
 
 ## Integrated product pipeline
-
-The current product architecture is:
 
 ```text
 Proof / learner question
@@ -33,6 +32,47 @@ Proof / learner question
 ```
 
 The pipeline is selective: simple verification does not trigger full archaeology, and raw CPG records are internal by default.
+
+## 40-case analysis corpus
+
+The first larger corpus lives under:
+
+```text
+corpus/analysis-integrated-v0.1/
+```
+
+It contains 40 proof cases spanning:
+
+- sequences and limits;
+- continuity and uniform continuity;
+- compactness and subsequences;
+- function sequences;
+- series;
+- ordered-real constructions.
+
+Batch audit:
+
+- **40/40** cases have complete learner-facing projection sections.
+- Motivation calibration: **31 M3-provisional / 9 M2 / 0 automatic M3**.
+- Automated structural annotation audit errors: **0**.
+
+The absence of automatic M3 labels is intentional: canonical textbook proofs are not upgraded to M3 without sufficient memorization-resistance evidence.
+
+The corpus exposed the highest recurring failure pressures as:
+
+- over-archaeology;
+- theorem black-boxing;
+- magic-constant overclaim;
+- over-M3 / canonical memorization;
+- recursive policy under-specification;
+- witness-origin confusion;
+- quantifier / causal-order confusion;
+- reference-route bias.
+
+These observations produced:
+
+- **Pattern Library v0.1** — mechanism-based rather than chapter-based.
+- **Proof Understanding Benchmark Alpha** — failure-driven, 12-dimensional, with development/stress/evaluation slices.
 
 ## Why ProofAtlas?
 
@@ -50,13 +90,11 @@ ProofAtlas treats these as first-class learning problems.
 
 ## Core architecture
 
-### 1. Motivation Fidelity
+### Motivation Fidelity
 
 Separates **why a step works** from **why one might reasonably try it**. Reference proofs are comparison targets, not search objectives.
 
-### 2. Construction Archaeology
-
-Recovers how a complete construction forms:
+### Construction Archaeology
 
 ```text
 Polished Proof
@@ -67,9 +105,9 @@ Polished Proof
   → Search-to-Presentation Map
 ```
 
-### 3. Cognitive Proof Graph
+### Cognitive Proof Graph
 
-The CPG is not a line-by-line proof graph. Its substrate separates:
+The CPG separates:
 
 - stable mathematical entities from Claims;
 - semantic entities from textual Mentions;
@@ -83,13 +121,11 @@ The frozen internal protocol lives at:
 schema/cognitive-proof-graph/v1/
 ```
 
-It is stress-tested with nine complete proof serializations plus six deliberately invalid fixtures.
-
-### 4. Integrated Skill v0.2
+### Integrated Skill v0.2
 
 The current `skills/proof-understanding/SKILL.md` is the first integrated orchestrator.
 
-It supports:
+Supported modes include:
 
 - map
 - diagnose
@@ -104,75 +140,62 @@ It supports:
 - verify
 - quiz
 
-It uses the lowest sufficient internal depth and keeps raw audit structure hidden unless explicitly requested.
+## Corpus-derived Pattern Library
+
+Current corpus-derived mechanisms include:
+
+- bridge / intermediate object;
+- localization;
+- error budgets;
+- min/max constraint merge;
+- tail control + finite prefix;
+- compactness extraction;
+- recursive selection policy;
+- near-extremal witness;
+- bad-sequence construction from negation;
+- theorem-input manufacturing;
+- domination / scalarization;
+- representation alignment / residualization;
+- anchor conditions;
+- periodic/subsequence decomposition.
+
+See `patterns/PATTERN_LIBRARY_v0.1.md`.
+
+## Benchmark Alpha
+
+The benchmark is deliberately failure-driven rather than reference-match-only.
+
+It currently defines 12 dimensions covering routing, hotspot detection, motivation fidelity, construction segmentation, provenance, theorem role, alternative routes, presentation compression, over-analysis control, learner explanation, transfer patterns, and internal semantic integrity.
+
+See `benchmarks/PROOF_UNDERSTANDING_BENCHMARK_ALPHA.md`.
 
 ## Repository layout
 
 ```text
 ProofAtlas/
 ├── docs/specs/
-│   ├── motivation-fidelity/
-│   ├── construction-archaeology/
-│   ├── cognitive-proof-graph/
-│   └── integrated-skill/
 ├── schema/cognitive-proof-graph/v1/
+├── corpus/analysis-integrated-v0.1/
+├── patterns/
+├── benchmarks/
 ├── examples/
-│   ├── analysis/
-│   └── cognitive-proof-graph/
 ├── evals/
-│   ├── m3-adversarial/
-│   ├── construction-archaeology/
-│   ├── cognitive-proof-graph/
-│   └── integrated-skill/
 └── skills/proof-understanding/SKILL.md
 ```
-
-## Machine-verifiable CPG
-
-The schema package uses two validation layers:
-
-1. **JSON Schema 2020-12** for local structure and types.
-2. **Semantic validator** for global IDs, relation signatures, endpoint types/cardinality, scope visibility, references, recursive-policy contracts, constant provenance, call/return nesting, and causal-DAG invariants.
-
-This separation is intentional: graph-wide semantic invariants are not forced into JSON Schema when doing so would make the schema brittle or misleading.
 
 ## Current evaluation status
 
 - M3 has dedicated adversarial tests.
 - Construction Archaeology has nine end-to-end full-proof tests.
 - CPG schema: **9/9 complete proof graphs VALID** and **6/6 invalid fixtures REJECTED**.
-- Integrated Skill v0.2: **9/9 pipeline-contract cases PASS**.
+- Integrated Skill v0.2: **9/9 protocol-contract pipeline cases PASS**.
+- Analysis Integrated Corpus v0.1: **40 complete learner-facing cases**, structurally audited.
 
-The next evaluation phase should move to a larger real proof corpus and actual learner-facing output evaluation.
-
-## Evaluation philosophy
-
-ProofAtlas should not be evaluated only by whether it reproduces a reference solution. Important questions include:
-
-- Did it identify the real obstacle?
-- Were Required Properties generated before candidate forms?
-- Was the Candidate Family independent of the reference answer?
-- Could a different valid route be preserved rather than suppressed?
-- Were convenient constants distinguished from necessary ones?
-- Did failed attempts provide information gain?
-- Did the explanation help a learner recognize a reusable proof pattern?
-- Does the machine representation preserve scope, identity, causality, and presentation compression without inventing a unique discovery history?
-- Did the product use only as much internal archaeology as the learner actually needed?
+The next phase is **not** another ontology pass. It should evaluate learner-facing outputs more rigorously, add perturbation/isomorphic cases for M3, and build a hidden external benchmark slice.
 
 ## Scope for the first research cycle
 
-Initial focus:
-
-- real / mathematical analysis;
-- epsilon-delta arguments;
-- continuity and uniform continuity;
-- compactness and subsequences;
-- error decomposition;
-- auxiliary functions;
-- threshold and constant construction;
-- theorem-role explanations.
-
-Later targets include linear algebra, abstract algebra, probability, topology, measure theory, functional analysis, and ODEs.
+Initial focus remains real / mathematical analysis. Expansion to other fields should follow only after the analysis corpus exposes stable product behavior.
 
 ## Roadmap
 
@@ -180,7 +203,7 @@ See [ROADMAP.md](ROADMAP.md).
 
 ## Contributing
 
-The project is deliberately open-design. Contributions are especially welcome in real proof-corpus failures, hindsight-leakage cases, learner-output failures, full-proof graph serializations, pattern-library proposals grounded in repeated evidence, and evaluation methodology.
+Contributions are especially welcome in real proof-corpus failures, hindsight-leakage cases, learner-output failures, transfer cases, pattern-library proposals grounded in repeated evidence, and evaluation methodology.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
