@@ -1,0 +1,180 @@
+schema_version: 1.0-rc1
+graph: {id: G_limsup_subsequence, title: A bounded sequence has a subsequence converging to its limsup, status: validated, root_scope: S_proof}
+entities:
+- {id: E_a, kind: MathematicalEntity, home_scope: S_proof, canonical_label: "(a_n)", math_kind_hint: sequence, origin_mode: inherited}
+- {id: E_L, kind: MathematicalEntity, home_scope: S_proof, canonical_label: "L=limsup a_n", math_kind_hint: scalar, origin_mode: inherited}
+- {id: E_invk, kind: MathematicalEntity, home_scope: S_route, canonical_label: 1/k, math_kind_hint: sequence, origin_mode: chosen}
+- {id: E_subseq, kind: MathematicalEntity, home_scope: S_child, canonical_label: "(a_{n_k})", math_kind_hint: subsequence, origin_mode: chosen}
+- id: F_scale
+  kind: SearchSpace
+  home_scope: S_route
+  canonical_label: vanishing positive scales
+  process_profile: {search_space_kind: parameter_family}
+- id: EP_parent
+  kind: Episode
+  home_scope: S_route
+  canonical_label: approximate tail suprema by actual terms
+  process_status: completed
+- id: EP_child
+  kind: Episode
+  home_scope: S_child
+  canonical_label: recursive witness construction
+  process_status: returned
+- {id: U_scale, kind: Unit, home_scope: S_route, canonical_label: choose vanishing approximation scale}
+- {id: U_policy, kind: Unit, home_scope: S_child, canonical_label: construct recursive selection policy}
+- id: P_policy
+  kind: ConstructionPolicy
+  home_scope: S_child
+  canonical_label: recursive subsequence policy
+  process_status: completed
+  process_profile:
+    state: previous index n_{k-1}
+    admissible_choices: "n_k>n_{k-1} with s_{m_k}-1/k < a_{n_k} <= s_{m_k}"
+    selection_rule: choose such an n_k from the tail
+    invariant: n_k>n_{k-1}
+    progress_measure: "m_k -> infinity and 1/k -> 0"
+    generated_artifact: E_subseq
+- {id: C_goal, kind: Claim, home_scope: S_route, canonical_label: limsup subsequence goal, proposition_text: "there exists a subsequence a_{n_k} -> L", references: [E_a,E_L], claim_status: goal}
+- {id: C_tail, kind: Claim, home_scope: S_route, canonical_label: tail suprema converge, proposition_text: "s_m=sup_{n>=m} a_n and s_m -> L", references: [E_a,E_L], claim_status: given}
+- {id: C_scale, kind: Claim, home_scope: S_route, canonical_label: chosen scale vanishes, proposition_text: "1/k -> 0", references: [E_invk], claim_status: proved}
+- {id: C_invariant, kind: Claim, home_scope: S_child, canonical_label: indices increase, proposition_text: "n_k>n_{k-1}", references: [E_subseq], claim_status: proved}
+- {id: C_approx, kind: Claim, home_scope: S_child, canonical_label: recursive approximation, proposition_text: "s_{m_k}-1/k < a_{n_k} <= s_{m_k}", references: [E_subseq,E_invk], claim_status: proved}
+- {id: C_subconv, kind: Claim, home_scope: S_child, canonical_label: subsequence converges to limsup, proposition_text: "a_{n_k}->L", references: [E_subseq,E_L], claim_status: proved}
+- id: P_recursive
+  kind: PresentationSpan
+  home_scope: S_route
+  canonical_label: recursive choice line
+  presentation_profile: {text: "Recursively choose n_k>n_{k-1} with a_{n_k}>s_{m_k}-1/k.", document_id: limsup-subsequence-proof}
+- id: P_conclude
+  kind: PresentationSpan
+  home_scope: S_route
+  canonical_label: squeeze conclusion
+  presentation_profile: {text: "Since s_{m_k}->L and 1/k->0, a_{n_k}->L.", document_id: limsup-subsequence-proof}
+scopes:
+- {id: S_proof, kind: proof, status: active}
+- {id: S_route, kind: route, parent_scope: S_proof, status: active, imports: [E_subseq,C_subconv], local_bindings: [E_invk,F_scale,EP_parent,U_scale,C_goal,C_tail,C_scale]}
+- {id: S_child, kind: episode, parent_scope: S_route, status: closed, exports: [E_subseq,C_subconv], local_bindings: [E_subseq,EP_child,U_policy,P_policy,C_invariant,C_approx,C_subconv]}
+relations:
+- id: R_goal
+  semantic_mode: assertion
+  layer: search
+  relation_type: goal_of
+  participants: [{role: goal, ref: C_goal},{role: process, ref: EP_parent}]
+  scope: S_route
+  evidence: {kind: structural_reconstruction}
+  confidence: strong
+- id: R_scale_member
+  semantic_mode: assertion
+  layer: search
+  relation_type: candidate_in
+  participants: [{role: candidate, ref: E_invk},{role: search_space, ref: F_scale}]
+  scope: S_route
+  evidence: {kind: structural_reconstruction}
+  confidence: strong
+- id: R_select_scale
+  semantic_mode: event
+  layer: search
+  relation_type: select
+  participants: [{role: selector, ref: U_scale},{role: search_space, ref: F_scale},{role: selected, ref: E_invk}]
+  scope: S_route
+  evidence: {kind: m3_forward_reconstruction}
+  confidence: strong
+  fidelity: M3-provisional
+  event: {outputs: [E_invk], causal_parents: [], outcome: accepted}
+  provenance:
+    kind: constant
+    parents: [F_scale]
+    origin_mode: chosen
+    value_necessity: not_necessary
+    role_necessity: necessary
+    route_necessity: necessary
+    optimality: nonoptimal_but_simple
+    alternatives: [2^-k, 1/k^2]
+- id: R_scale_claim
+  semantic_mode: event
+  layer: logical
+  relation_type: establish_claim
+  participants: [{role: actor, ref: U_scale},{role: evidence, ref: R_select_scale},{role: conclusion, ref: C_scale}]
+  scope: S_route
+  evidence: {kind: mathematical_derivation}
+  confidence: certain
+  event: {outputs: [C_scale], causal_parents: [R_select_scale], outcome: proved}
+- id: R_call_child
+  semantic_mode: event
+  layer: search
+  relation_type: call
+  participants: [{role: caller, ref: EP_parent},{role: callee, ref: EP_child},{role: input, ref: C_tail},{role: input, ref: C_scale}]
+  scope: S_child
+  evidence: {kind: structural_reconstruction}
+  confidence: strong
+  event: {preconditions: [C_tail,C_scale], causal_parents: [R_scale_claim], outcome: called}
+- id: R_make_policy
+  semantic_mode: event
+  layer: search
+  relation_type: produce
+  participants: [{role: producer, ref: U_policy},{role: output, ref: P_policy}]
+  scope: S_child
+  evidence: {kind: m3_forward_reconstruction}
+  confidence: strong
+  fidelity: M3-provisional
+  event: {preconditions: [C_tail,C_scale], outputs: [P_policy], causal_parents: [R_call_child], outcome: policy_constructed}
+- id: R_generate
+  semantic_mode: event
+  layer: search
+  relation_type: produce
+  participants: [{role: producer, ref: P_policy},{role: output, ref: E_subseq},{role: output, ref: C_invariant},{role: output, ref: C_approx},{role: output, ref: C_subconv}]
+  scope: S_child
+  evidence: {kind: structural_reconstruction}
+  confidence: strong
+  event: {preconditions: [C_tail,C_scale], outputs: [E_subseq,C_invariant,C_approx,C_subconv], causal_parents: [R_make_policy], outcome: recursive_construction_complete}
+- id: R_return
+  semantic_mode: event
+  layer: search
+  relation_type: return
+  participants: [{role: callee, ref: EP_child},{role: caller, ref: EP_parent},{role: output, ref: E_subseq},{role: output, ref: C_subconv}]
+  scope: S_child
+  evidence: {kind: structural_reconstruction}
+  confidence: strong
+  event: {preconditions: [C_subconv], outputs: [E_subseq,C_subconv], causal_parents: [R_generate], outcome: returned}
+- id: R_export
+  semantic_mode: event
+  layer: cross_layer
+  relation_type: export
+  participants: [{role: exported, ref: E_subseq},{role: exported, ref: C_subconv},{role: source_scope, ref: S_child},{role: target_scope, ref: S_route}]
+  scope: S_child
+  evidence: {kind: structural_reconstruction}
+  confidence: strong
+  event: {preconditions: [C_subconv], outputs: [E_subseq,C_subconv], causal_parents: [R_return], outcome: exported}
+- id: R_final
+  semantic_mode: event
+  layer: logical
+  relation_type: establish_claim
+  participants: [{role: actor, ref: EP_parent},{role: evidence, ref: C_subconv},{role: conclusion, ref: C_goal}]
+  scope: S_route
+  evidence: {kind: mathematical_derivation}
+  confidence: certain
+  event: {preconditions: [C_subconv], outputs: [C_goal], causal_parents: [R_export], outcome: proved}
+- id: R_recursive_map
+  semantic_mode: assertion
+  layer: cross_layer
+  relation_type: compressed_into
+  participants: [{role: source, ref: R_make_policy},{role: source, ref: P_policy},{role: source, ref: R_generate},{role: target, ref: P_recursive}]
+  scope: S_route
+  evidence: {kind: explicit_text}
+  confidence: strong
+  loss_profile: [motivation_loss,constraint_provenance_loss,dependency_loss]
+- id: R_conclude_map
+  semantic_mode: assertion
+  layer: cross_layer
+  relation_type: presented_as
+  participants: [{role: source, ref: R_final},{role: target, ref: P_conclude}]
+  scope: S_route
+  evidence: {kind: explicit_text}
+  confidence: certain
+mentions:
+- {id: M_invk, entity_id: E_invk, scope: S_route, view: presentation, source_span: P_recursive, surface_form: 1/k, role_in_span: vanishing scale}
+- {id: M_subseq, entity_id: E_subseq, scope: S_route, view: presentation, source_span: P_conclude, surface_form: "a_{n_k}", role_in_span: returned subsequence}
+relation_signatures: {catalog_version: 1.0-rc1}
+presentation_sequences:
+- {id: SEQ_limsup, document_id: limsup-subsequence-proof, ordered_spans: [P_recursive,P_conclude]}
+validation_invariants: [stress-tested]
