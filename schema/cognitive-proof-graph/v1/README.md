@@ -1,24 +1,35 @@
-# ProofAtlas Cognitive Proof Graph Schema v1 Candidate
+# ProofAtlas Cognitive Proof Graph Schema 1.0-rc1
 
-This directory turns CPG v0.1–v0.3 semantics into a machine-verifiable candidate format.
+This directory contains ProofAtlas's **first stable internal Cognitive Proof Graph data protocol**.
+
+Public release status remains **v1 candidate / rc1**.
 
 ## Core files
 
-- `schema/cognitive-proof-graph/v1/cognitive-proof-graph.schema.json` — JSON Schema 2020-12 structural schema.
-- `schema/cognitive-proof-graph/v1/relation-signatures.json` — relation/event semantic signature catalog.
-- `tools/validate_cpg.py` — cross-reference, endpoint type, scope, cardinality, export and causal-DAG validator.
-- `examples/cognitive-proof-graph/*.yaml` — complete proof serializations.
-- `evals/cognitive-proof-graph/` — validation report and negative fixtures.
+- `cognitive-proof-graph.schema.json` — JSON Schema 2020-12 structural schema.
+- `relation-signatures.json` — relation/event semantic signature catalog.
+- `../../../tools/validate_cpg.py` — graph-wide semantic validator.
+- `../../../examples/cognitive-proof-graph/` — nine complete proof serializations.
+- `../../../evals/cognitive-proof-graph/` — validation reports and invalid fixtures.
 
 ## Validation
 
 ```bash
 python tools/validate_cpg.py \
-  examples/cognitive-proof-graph/uniform-limit-continuity.yaml \
+  examples/cognitive-proof-graph/limsup-subsequence.yaml \
   schema/cognitive-proof-graph/v1/cognitive-proof-graph.schema.json \
   schema/cognitive-proof-graph/v1/relation-signatures.json
 ```
 
-JSON Schema alone is intentionally not treated as sufficient for graph-wide invariants. The semantic validator checks relation signatures, global references, reasoning visibility, explicit export/import consistency, n-ary participant cardinalities, and event causal-DAG acyclicity.
+JSON Schema validates local structure. The semantic validator checks global references, relation signatures, endpoint types/cardinality, scope visibility, explicit export/import consistency, ConstructionPolicy artifacts, typed provenance references, call/return nesting, and event causal-DAG acyclicity.
 
-Status: **v1 candidate / rc1**, not stable v1.0.
+## Stress-test status
+
+- 9/9 complete proof graphs validate.
+- 6/6 deliberately invalid fixtures are rejected.
+- no new top-level ontology family was required.
+
+See:
+
+- `evals/cognitive-proof-graph/SCHEMA_STRESS_TEST_REPORT.md`
+- `docs/specs/cognitive-proof-graph/INTERNAL_PROTOCOL_FREEZE_v1.0-rc1.md`
