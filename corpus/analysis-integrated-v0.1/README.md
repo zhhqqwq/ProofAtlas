@@ -19,13 +19,44 @@ This corpus is the first batch built specifically for **Integrated ProofAtlas Sk
 - Includes both construction-heavy cases and low-archaeology negative controls.
 - Public development/evaluation corpus; not a hidden benchmark and not evidence of measured learner gains.
 
-## Included project artifacts
+## Structured data
+
+The full 40-record corpus is versioned as four JSONL shards:
+
+```text
+data/
+├── cases-01-10.jsonl
+├── cases-11-20.jsonl
+├── cases-21-30.jsonl
+└── cases-31-40.jsonl
+```
+
+Every record includes:
+
+- theorem / statement;
+- reference proof skeleton;
+- recommended Skill mode and depth;
+- cognitive hotspots;
+- pattern tags;
+- Motivation Fidelity calibration;
+- full learner-facing explanation;
+- failure-pressure annotations.
+
+## Corpus documentation
 
 - `CORPUS_INDEX.md` — case index and distribution.
-- `PATTERN_LIBRARY_v0.1.md` — corpus-derived mechanism library.
+- `CORPUS_FINDINGS.md` — batch-level findings.
 - `FAILURE_PRESSURE_REPORT.md` — failure classes exposed by the batch.
-- `PROOF_UNDERSTANDING_BENCHMARK_ALPHA.md` — benchmark design derived from those failures.
-- `benchmark_alpha.json` — development/stress/evaluation splits and dimensions.
-- `BATCH_GENERATION_AUDIT.md` — batch completeness/calibration audit.
+- `BATCH_GENERATION_AUDIT.md` — completeness/calibration audit.
 
-The full structured JSONL corpus and all 40 learner-facing explanations are distributed in the project delivery package generated with this corpus version.
+Project-level outputs derived from this corpus:
+
+- `../../patterns/PATTERN_LIBRARY_v0.1.md`
+- `../../benchmarks/PROOF_UNDERSTANDING_BENCHMARK_ALPHA.md`
+- `../../benchmarks/benchmark_alpha.json`
+
+## Status
+
+This is a **development / evaluation corpus**.
+
+The current public cases should not be treated as a permanent hidden benchmark. The next expansion should emphasize perturbation/isomorphic pairs and learner-level variants rather than merely adding more canonical textbook proofs.
