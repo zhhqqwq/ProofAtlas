@@ -1,0 +1,17 @@
+{
+  "name": "ProofAtlas Transfer & Memorization Evaluation v0.1",
+  "evaluated_public_variants": 36,
+  "public_run_status": "annotation-conditioned development sanity check; not blind generalization evidence",
+  "hidden_slice_status": "retired_for_current_evaluation_context",
+  "hidden_commitment_integrity_verified": true,
+  "final_m3_promotions": [],
+  "final_m3_promotion_count": 0,
+  "selected_anchor_count": 18,
+  "evaluator_patch": "variant-specific expected mechanisms and route signatures",
+  "next_required_evidence": "fresh sealed hidden run in an evaluator context that has never seen gold, followed by human rationale review",
+  "evaluation_evidence_statuses": {
+    "public": "public-development",
+    "old_hidden": "contaminated-hidden",
+    "future_required": "sealed-hidden"
+  }
+}
