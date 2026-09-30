@@ -207,9 +207,9 @@ ProofAtlas/
 - Integrated Skill v0.2: **9/9 protocol-contract pipeline cases PASS**.
 - Analysis Integrated Corpus v0.1: **40 canonical learner-facing cases**, structurally audited.
 - Analysis Integrated Corpus v0.2: **18 transfer pairs / 36 public variants + 24 learner-depth projections**.
-- Hidden external slice v0.1: **12 private cases**, integrity committed by public SHA-256 hashes.
+- Hidden external slice v0.1: **12 private cases**, hash integrity verified, but retired for the current evaluator context after gold exposure; it is not eligible for M3 promotion.
 
-The next phase is **not** another ontology pass or more canonical theorem accumulation. It should run the Skill blind on the v0.2 transfer pairs and hidden slice, perform human learner-facing review, and only then consider promoting selected M3-provisional cases.
+The first transfer/memorization evaluation pass found that the existing hidden slice was contaminated for the current evaluator context and therefore produced **0 final M3 promotions**. The next phase is a fresh sealed hidden run in an isolated evaluator context, followed by human rationale review.
 
 ## Scope for the first research cycle
 
