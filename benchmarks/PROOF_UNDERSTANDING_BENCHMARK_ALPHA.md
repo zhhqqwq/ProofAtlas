@@ -21,7 +21,7 @@ It must penalize:
 - **Stress — 8 cases:** recursive policies, quantifier negation, compactness contradiction, advanced theorem chains, geometric blocking.
 - **Evaluation — 8 cases:** separate public evaluation slice.
 
-A serious future benchmark should add a hidden external set rather than treating these 40 public cases as sufficient.
+The 40 public canonical cases remain development/evaluation material. Benchmark Alpha v0.2 adds 18 public perturbation/isomorphic pairs plus a 12-case private hidden external slice whose case/gold files are not committed to the public repository.
 
 ## Dimensions
 
@@ -77,3 +77,36 @@ plus hard violations for:
 - mathematical error;
 - scope leakage;
 - fabricated historical claims.
+
+
+## v0.2 transfer dimensions
+
+### B13 Memorization Resistance
+Canonical → parameter/surface perturbation → isomorphic transfer. Exact recovery of a canonical proof is not enough for M3 promotion.
+
+### B14 Structural Transfer
+Recover the stable mechanism signature when theorem surface, objects, constants, or representation change.
+
+### B15 Route Stability Under Surface Change
+Preserve the semantic route under harmless perturbations while allowing legitimate simplification when the isomorphic case removes a real constraint.
+
+### B16 Learner-Depth Adaptation
+Evaluate the same proof at beginner / standard / advanced depth without changing the mathematical core or leaking raw internal schema to beginners.
+
+## Hidden external slice
+
+The current private slice contains 12 real-analysis transfer cases.
+
+Public files expose only:
+
+- `HIDDEN_EXTERNAL_SLICE_PROTOCOL_v0.1.md`;
+- `hidden_external_manifest.json` with SHA-256 commitments;
+- evaluator/integrity tooling.
+
+Publishing the hidden case text or gold annotations retires the slice.
+
+## M3 promotion rule
+
+No canonical `M3-provisional` case is automatically promoted.
+
+Promotion requires successful perturbation and isomorphic transfer, no hindsight-leak hard violation, and human review of the discovery rationale.
