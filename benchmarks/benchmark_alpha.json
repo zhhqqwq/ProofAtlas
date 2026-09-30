@@ -1,6 +1,6 @@
 {
   "name": "ProofAtlas Proof Understanding Benchmark Alpha",
-  "version": "0.2-alpha",
+  "version": "0.2.1-alpha",
   "corpus": "analysis-integrated-v0.1",
   "splits": {
     "development": [
@@ -140,7 +140,19 @@
   "hidden_external": {
     "case_count": 12,
     "content_public": false,
-    "manifest": "hidden_external_manifest.json"
+    "manifest": "hidden_external_manifest.json",
+    "status": "retired_for_current_evaluation_context",
+    "usable_for_m3_promotion": false
   },
-  "m3_promotion_policy": "No automatic promotion; require perturbation + isomorphic transfer, no hard hindsight-leak violation, and human review."
+  "m3_promotion_policy": "No automatic promotion; require sealed hidden P/I transfer, no hard hindsight-leak violation, semantic route review, and human rationale review.",
+  "evaluation_provenance": {
+    "required": true,
+    "allowed_statuses": [
+      "public-development",
+      "sealed-hidden",
+      "contaminated-hidden",
+      "retired"
+    ],
+    "promotion_eligible_status": "sealed-hidden"
+  }
 }
