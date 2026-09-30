@@ -1,0 +1,22 @@
+{
+  "name": "ProofAtlas Proof Understanding Benchmark Alpha",
+  "version": "0.2-alpha",
+  "base_corpus": "analysis-integrated-v0.1",
+  "transfer_corpus": "analysis-integrated-v0.2",
+  "public_transfer_pairs": 18,
+  "public_transfer_cases": 36,
+  "learner_depth_anchors": 8,
+  "learner_depth_outputs": 24,
+  "hidden_external": {
+    "case_count": 12,
+    "content_public": false,
+    "manifest": "hidden_external_manifest.json"
+  },
+  "added_dimensions": [
+    {"id":"B13","name":"Memorization Resistance","metric":"triad_gate_pass_rate"},
+    {"id":"B14","name":"Structural Transfer","metric":"mechanism_signature_accuracy"},
+    {"id":"B15","name":"Route Stability Under Surface Change","metric":"semantic_route_consistency"},
+    {"id":"B16","name":"Learner-Depth Adaptation","metric":"level_rubric_score"}
+  ],
+  "m3_promotion": "No automatic promotion; pass P + I transfer, no hard leakage violation, human review."
+}
