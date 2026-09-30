@@ -1,0 +1,16 @@
+{
+  "name": "ProofAtlas Hidden External Slice v0.1",
+  "case_count": 12,
+  "content_public": false,
+  "commitments": {
+    "cases_sha256": "dd37537e07c89aa33fae03423a13c857290d5896344c7020205a79187c32f514",
+    "gold_sha256": "f1557a7a04c4d866714141a4bdd48b49b05955fc25ff8989034d5d278577f2d8"
+  },
+  "dimensions": [
+    "memorization_resistance",
+    "structural_transfer",
+    "route_stability",
+    "motivation_fidelity",
+    "learner_depth"
+  ]
+}
