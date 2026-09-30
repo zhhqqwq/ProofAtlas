@@ -1,0 +1,29 @@
+{
+  "run_id": "FH-20260930-001",
+  "purpose": "First promotion-eligible fresh hidden evaluator run",
+  "status": "AWAITING_FRESH_SEALED_SLICE",
+  "required_evaluation_provenance": "sealed-hidden",
+  "skill_version": "Integrated ProofAtlas Skill v0.2",
+  "current_context_eligible_as_evaluator": false,
+  "reason": "Current conversation has previously exposed the retired hidden slice and its gold annotations.",
+  "retired_slice": {
+    "name": "ProofAtlas Hidden External Slice v0.1",
+    "cases_sha256": "dd37537e07c89aa33fae03423a13c857290d5896344c7020205a79187c32f514",
+    "gold_sha256": "f1557a7a04c4d866714141a4bdd48b49b05955fc25ff8989034d5d278577f2d8",
+    "usable_for_m3_promotion": false
+  },
+  "fresh_slice_requirements": {
+    "generated_outside_current_evaluator_context": true,
+    "case_statements_file_required": true,
+    "gold_file_required_but_not_visible_to_context_A": true,
+    "statement_sha256_required": true,
+    "gold_sha256_required": true,
+    "recommended_case_count": "12-20",
+    "must_not_reuse_retired_slice": true
+  },
+  "outputs": {
+    "predictions": "predictions.json",
+    "commitment_manifest": "prediction_commitment.json",
+    "prediction_sha256": null
+  }
+}
