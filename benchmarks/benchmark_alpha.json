@@ -1,24 +1,146 @@
 {
   "name": "ProofAtlas Proof Understanding Benchmark Alpha",
-  "version": "0.1-alpha",
+  "version": "0.2-alpha",
   "corpus": "analysis-integrated-v0.1",
   "splits": {
-    "development": ["AN-001","AN-002","AN-003","AN-004","AN-005","AN-006","AN-011","AN-012","AN-013","AN-014","AN-015","AN-017","AN-018","AN-022","AN-023","AN-025","AN-026","AN-027","AN-029","AN-030","AN-032","AN-033","AN-037","AN-038"],
-    "stress": ["AN-007","AN-008","AN-010","AN-016","AN-020","AN-024","AN-031","AN-035"],
-    "evaluation": ["AN-009","AN-019","AN-021","AN-028","AN-034","AN-036","AN-039","AN-040"]
+    "development": [
+      "AN-001",
+      "AN-002",
+      "AN-003",
+      "AN-004",
+      "AN-005",
+      "AN-006",
+      "AN-011",
+      "AN-012",
+      "AN-013",
+      "AN-014",
+      "AN-015",
+      "AN-017",
+      "AN-018",
+      "AN-022",
+      "AN-023",
+      "AN-025",
+      "AN-026",
+      "AN-027",
+      "AN-029",
+      "AN-030",
+      "AN-032",
+      "AN-033",
+      "AN-037",
+      "AN-038"
+    ],
+    "stress": [
+      "AN-007",
+      "AN-008",
+      "AN-010",
+      "AN-016",
+      "AN-020",
+      "AN-024",
+      "AN-031",
+      "AN-035"
+    ],
+    "evaluation": [
+      "AN-009",
+      "AN-019",
+      "AN-021",
+      "AN-028",
+      "AN-034",
+      "AN-036",
+      "AN-039",
+      "AN-040"
+    ]
   },
   "dimensions": [
-    {"id":"B1","name":"Mode Routing","metric":"accuracy"},
-    {"id":"B2","name":"Cognitive Hotspot Detection","metric":"precision_recall"},
-    {"id":"B3","name":"Motivation Fidelity","metric":"ordinal+violation_rate"},
-    {"id":"B4","name":"Construction Segmentation","metric":"unit_boundary_f1"},
-    {"id":"B5","name":"Constraint & Constant Provenance","metric":"provenance_accuracy"},
-    {"id":"B6","name":"Theorem Role & Preparation","metric":"role_coverage"},
-    {"id":"B7","name":"Alternative Route Preservation","metric":"route_preservation_rate"},
-    {"id":"B8","name":"Presentation Compression Recovery","metric":"mapping_accuracy"},
-    {"id":"B9","name":"Over-Analysis Control","metric":"negative_control_specificity"},
-    {"id":"B10","name":"Learner-Facing Explanation","metric":"rubric_score"},
-    {"id":"B11","name":"Transfer Pattern Quality","metric":"human_rubric"},
-    {"id":"B12","name":"Internal Semantic Integrity","metric":"violation_count"}
-  ]
+    {
+      "id": "B1",
+      "name": "Mode Routing",
+      "metric": "accuracy"
+    },
+    {
+      "id": "B2",
+      "name": "Cognitive Hotspot Detection",
+      "metric": "precision_recall"
+    },
+    {
+      "id": "B3",
+      "name": "Motivation Fidelity",
+      "metric": "ordinal+violation_rate"
+    },
+    {
+      "id": "B4",
+      "name": "Construction Segmentation",
+      "metric": "unit_boundary_f1"
+    },
+    {
+      "id": "B5",
+      "name": "Constraint & Constant Provenance",
+      "metric": "provenance_accuracy"
+    },
+    {
+      "id": "B6",
+      "name": "Theorem Role & Preparation",
+      "metric": "role_coverage"
+    },
+    {
+      "id": "B7",
+      "name": "Alternative Route Preservation",
+      "metric": "route_preservation_rate"
+    },
+    {
+      "id": "B8",
+      "name": "Presentation Compression Recovery",
+      "metric": "mapping_accuracy"
+    },
+    {
+      "id": "B9",
+      "name": "Over-Analysis Control",
+      "metric": "negative_control_specificity"
+    },
+    {
+      "id": "B10",
+      "name": "Learner-Facing Explanation",
+      "metric": "rubric_score"
+    },
+    {
+      "id": "B11",
+      "name": "Transfer Pattern Quality",
+      "metric": "human_rubric"
+    },
+    {
+      "id": "B12",
+      "name": "Internal Semantic Integrity",
+      "metric": "violation_count"
+    },
+    {
+      "id": "B13",
+      "name": "Memorization Resistance",
+      "metric": "triad_gate_pass_rate"
+    },
+    {
+      "id": "B14",
+      "name": "Structural Transfer",
+      "metric": "mechanism_signature_accuracy"
+    },
+    {
+      "id": "B15",
+      "name": "Route Stability Under Surface Change",
+      "metric": "semantic_route_consistency"
+    },
+    {
+      "id": "B16",
+      "name": "Learner-Depth Adaptation",
+      "metric": "level_rubric_score"
+    }
+  ],
+  "transfer_corpus": "analysis-integrated-v0.2",
+  "public_transfer_pairs": 18,
+  "public_transfer_cases": 36,
+  "learner_depth_anchors": 8,
+  "learner_depth_outputs": 24,
+  "hidden_external": {
+    "case_count": 12,
+    "content_public": false,
+    "manifest": "hidden_external_manifest.json"
+  },
+  "m3_promotion_policy": "No automatic promotion; require perturbation + isomorphic transfer, no hard hindsight-leak violation, and human review."
 }
