@@ -16,7 +16,8 @@ The project now has three frozen/rc1 protocol layers, an integrated Skill candid
 - **Construction Archaeology v1.0-rc1** — reconstruction of Units, Episodes, Routes, constraints, constants, policies, and Search-to-Presentation compression.
 - **Cognitive Proof Graph schema 1.0-rc1** — machine-verifiable internal protocol; frozen as the first stable internal data protocol.
 - **Integrated ProofAtlas Skill v0.2** — selective orchestrator combining the three layers with learner-facing progressive disclosure.
-- **Analysis Integrated Corpus v0.1** — 40 real-analysis proof cases with routing, hotspots, fidelity calibration, learner-facing explanations, failure-pressure annotations, and benchmark splits.
+- **Analysis Integrated Corpus v0.1** — 40 canonical real-analysis proof cases with learner-facing explanations and failure-pressure annotations.
+- **Analysis Integrated Corpus v0.2** — 18 perturbation/isomorphic pairs (36 public transfer cases), 8 learner-depth anchors, memorization-resistance gates, and a private 12-case hidden external slice with public hash commitments.
 
 Public project status remains pre-alpha. CPG public status remains v1 candidate / rc1 rather than stable public v1.0.
 
@@ -33,12 +34,18 @@ Proof / learner question
 
 The pipeline is selective: simple verification does not trigger full archaeology, and raw CPG records are internal by default.
 
-## 40-case analysis corpus
+## Analysis corpus and transfer layer
 
-The first larger corpus lives under:
+The canonical 40-case corpus lives under:
 
 ```text
 corpus/analysis-integrated-v0.1/
+```
+
+The transfer/memorization-resistance layer lives under:
+
+```text
+corpus/analysis-integrated-v0.2/
 ```
 
 It contains 40 proof cases spanning:
@@ -72,7 +79,15 @@ The corpus exposed the highest recurring failure pressures as:
 These observations produced:
 
 - **Pattern Library v0.1** — mechanism-based rather than chapter-based.
-- **Proof Understanding Benchmark Alpha** — failure-driven, 12-dimensional, with development/stress/evaluation slices.
+- **Proof Understanding Benchmark Alpha** — failure-driven, initially 12-dimensional.
+
+Corpus v0.2 adds:
+
+- **18 canonical → perturbation → isomorphic transfer triads** (36 new public transfer cases);
+- **8 proofs at beginner / standard / advanced learner depth** (24 learner-facing variants);
+- **Memorization Resistance Protocol v0.1** — no automatic M3 promotion;
+- **Benchmark dimensions B13–B16** for memorization resistance, structural transfer, route stability, and learner-depth adaptation;
+- a **12-case private hidden external slice**, with only protocol and SHA-256 commitments published.
 
 ## Why ProofAtlas?
 
@@ -176,6 +191,7 @@ ProofAtlas/
 ├── docs/specs/
 ├── schema/cognitive-proof-graph/v1/
 ├── corpus/analysis-integrated-v0.1/
+├── corpus/analysis-integrated-v0.2/
 ├── patterns/
 ├── benchmarks/
 ├── examples/
@@ -189,9 +205,11 @@ ProofAtlas/
 - Construction Archaeology has nine end-to-end full-proof tests.
 - CPG schema: **9/9 complete proof graphs VALID** and **6/6 invalid fixtures REJECTED**.
 - Integrated Skill v0.2: **9/9 protocol-contract pipeline cases PASS**.
-- Analysis Integrated Corpus v0.1: **40 complete learner-facing cases**, structurally audited.
+- Analysis Integrated Corpus v0.1: **40 canonical learner-facing cases**, structurally audited.
+- Analysis Integrated Corpus v0.2: **18 transfer pairs / 36 public variants + 24 learner-depth projections**.
+- Hidden external slice v0.1: **12 private cases**, integrity committed by public SHA-256 hashes.
 
-The next phase is **not** another ontology pass. It should evaluate learner-facing outputs more rigorously, add perturbation/isomorphic cases for M3, and build a hidden external benchmark slice.
+The next phase is **not** another ontology pass or more canonical theorem accumulation. It should run the Skill blind on the v0.2 transfer pairs and hidden slice, perform human learner-facing review, and only then consider promoting selected M3-provisional cases.
 
 ## Scope for the first research cycle
 
