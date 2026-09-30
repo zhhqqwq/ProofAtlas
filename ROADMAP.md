@@ -12,7 +12,7 @@
 - [x] Run Integrated Skill v0.2 across a 40-case real-analysis development corpus.
 - [x] Collect first-pass failure pressures: over-analysis, theorem black-boxing, constant overclaim, policy under-specification, witness-origin confusion, causal-order confusion, and reference-route bias.
 - [x] Add 18 perturbation/isomorphic transfer pairs (36 public variants) for memorization-resistance testing.
-- [ ] Promote selected canonical cases from M3-provisional only after blind pair evaluation + human review.
+- [x] Run the first transfer/memorization evaluation pass and identify evaluator-isolation requirements.\n- [ ] Promote selected canonical cases from M3-provisional only after a **fresh sealed hidden** run + human review.
 
 ## v0.2 — Construction Archaeology
 
@@ -61,7 +61,7 @@
 - [x] Build a 12-case hidden external evaluation slice; publish only protocol + SHA-256 commitments.
 - [x] Add 18 perturbation/isomorphic pairs for Motivation Fidelity and structural transfer.
 - [ ] Run human evaluation for explanation and transfer dimensions.
-- [ ] Validate benchmark reliability before making comparative performance claims.
+- [x] Add evaluation-provenance status and retire the contaminated hidden slice for the current evaluator context.\n- [ ] Build a replacement sealed hidden slice outside the evaluator context.\n- [ ] Validate benchmark reliability before making comparative performance claims.
 
 ## v1.0 — First stable public release
 
