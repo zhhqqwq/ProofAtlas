@@ -1,0 +1,16 @@
+{
+  "run_id": "FH-20260930-001",
+  "evaluation_provenance": "sealed-hidden",
+  "skill_version": "Integrated ProofAtlas Skill v0.2",
+  "evaluator_context_attestation": {
+    "gold_visible_before_commit": false,
+    "prior_gold_transcript_available": false,
+    "notes": ""
+  },
+  "fresh_slice": {
+    "slice_id": "",
+    "statement_sha256": "",
+    "gold_commitment_sha256": ""
+  },
+  "predictions": []
+}
