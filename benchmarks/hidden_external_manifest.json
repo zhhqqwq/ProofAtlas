@@ -12,5 +12,10 @@
     "route_stability",
     "motivation_fidelity",
     "learner_depth"
-  ]
+  ],
+  "status": "retired_for_current_evaluation_context",
+  "commitment_integrity_verified": true,
+  "retirement_reason": "Hidden case statements and gold were exposed in the same conversation/tool context before the requested blind run.",
+  "usable_for_m3_promotion": false,
+  "replacement_required": "Fresh sealed slice evaluated in a context that has never seen its gold."
 }
