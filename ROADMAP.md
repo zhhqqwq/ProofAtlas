@@ -11,7 +11,8 @@
 - [x] Run adversarial tests on analysis proofs.
 - [x] Run Integrated Skill v0.2 across a 40-case real-analysis development corpus.
 - [x] Collect first-pass failure pressures: over-analysis, theorem black-boxing, constant overclaim, policy under-specification, witness-origin confusion, causal-order confusion, and reference-route bias.
-- [ ] Add perturbation/isomorphic cases sufficient to promote selected canonical cases from M3-provisional to M3.
+- [x] Add 18 perturbation/isomorphic transfer pairs (36 public variants) for memorization-resistance testing.
+- [ ] Promote selected canonical cases from M3-provisional only after blind pair evaluation + human review.
 
 ## v0.2 — Construction Archaeology
 
@@ -48,16 +49,17 @@
 - [x] Generate and structurally audit 40 learner-facing explanation records.
 - [x] Derive Pattern Library v0.1 from repeated corpus mechanisms.
 - [ ] Run human learner-facing review for clarity, calibration, cognitive load, and transfer value.
-- [ ] Add learner-level variants for a selected subset.
+- [x] Add beginner / standard / advanced learner-level variants for 8 representative anchors.
+- [ ] Run human learner-facing review for the new depth variants.
 
 ## v0.5 — Benchmark
 
 - [x] Design Proof Understanding Benchmark Alpha from observed failure pressures.
 - [x] Define development / stress / evaluation slices for the 40 public cases.
 - [x] Define 12 evaluation dimensions instead of a single reference-match score.
-- [ ] Implement scoring scripts for machine-checkable dimensions.
-- [ ] Build a hidden external evaluation set.
-- [ ] Add perturbation/isomorphic pairs for Motivation Fidelity.
+- [ ] Implement scoring scripts for all machine-checkable dimensions. Initial transfer-pair and hidden-integrity tools are now available.
+- [x] Build a 12-case hidden external evaluation slice; publish only protocol + SHA-256 commitments.
+- [x] Add 18 perturbation/isomorphic pairs for Motivation Fidelity and structural transfer.
 - [ ] Run human evaluation for explanation and transfer dimensions.
 - [ ] Validate benchmark reliability before making comparative performance claims.
 
