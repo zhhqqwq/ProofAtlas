@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProofAtlas Fresh Hidden Prediction File v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "evaluation_provenance",
+    "skill_version",
+    "evaluator_context_attestation",
+    "predictions"
+  ],
+  "properties": {
+    "run_id": {"type": "string", "minLength": 1},
+    "evaluation_provenance": {"const": "sealed-hidden"},
+    "skill_version": {"const": "Integrated ProofAtlas Skill v0.2"},
+    "evaluator_context_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gold_visible_before_commit",
+        "prior_gold_transcript_available"
+      ],
+      "properties": {
+        "gold_visible_before_commit": {"const": false},
+        "prior_gold_transcript_available": {"const": false},
+        "notes": {"type": "string"}
+      }
+    },
+    "predictions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "case_id",
+          "proof_map",
+          "cognitive_hotspot",
+          "preconstruction_state",
+          "obstacle",
+          "required_properties",
+          "candidate_family",
+          "selected_route",
+          "local_test",
+          "predicted_mechanisms",
+          "route_signature",
+          "calibration",
+          "learner_facing_explanation",
+          "proposed_fidelity",
+          "confidence"
+        ],
+        "properties": {
+          "case_id": {"type": "string"},
+          "proof_map": {"type": "string"},
+          "cognitive_hotspot": {"type": "string"},
+          "preconstruction_state": {"type": "string"},
+          "obstacle": {"type": "string"},
+          "required_properties": {"type": "array", "items": {"type": "string"}},
+          "candidate_family": {"type": "array", "items": {"type": "string"}},
+          "selected_route": {"type": "string"},
+          "local_test": {"type": "string"},
+          "predicted_mechanisms": {"type": "array", "items": {"type": "string"}},
+          "route_signature": {"type": "string"},
+          "calibration": {"type": "string"},
+          "learner_facing_explanation": {"type": "string"},
+          "proposed_fidelity": {"enum": ["M1", "M2", "M3-provisional"]},
+          "confidence": {"enum": ["low", "medium", "high"]},
+          "uncertainty": {"type": "string"}
+        }
+      }
+    }
+  }
+}
